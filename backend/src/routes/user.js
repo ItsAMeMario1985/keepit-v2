@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const router = express.Router()
 
 const auth = require('../middleware/auth')
-const User = require('../models/User')
+const User = require('../models/UserModel')
 
 /**
  * @method - POST
@@ -16,7 +16,6 @@ const User = require('../models/User')
 router.post(
   '/signup',
   [
-    check('username', 'Please Enter a Valid Username').not().isEmpty(),
     check('email', 'Please enter a valid email').isEmail(),
     check('password', 'Please enter a valid password').isLength({
       min: 6,
@@ -30,7 +29,7 @@ router.post(
       })
     }
 
-    const { username, email, password } = req.body
+    const { email, password } = req.body
     try {
       let user = await User.findOne({
         email,
@@ -42,7 +41,6 @@ router.post(
       }
 
       user = new User({
-        username,
         email,
         password,
       })
@@ -62,7 +60,7 @@ router.post(
         payload,
         'randomString',
         {
-          expiresIn: 10000,
+          expiresIn: 50000,
         },
         (err, token) => {
           if (err) throw err
