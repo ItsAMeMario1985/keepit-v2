@@ -77,6 +77,11 @@ router.post('/upload', auth, async (req, res) => {
     //     console.log(err)
     //   }
     // )
+    // sharp('./public/images/' + name + '.webp')
+    // .resize(300)
+    // .toFile('./public/images/' + name + '_thumbnail.webp', (err, info) => {
+    //   console.log(console.log('Error while resizing:', err))
+    // })
 
     res.json(user);
   } catch (e) {

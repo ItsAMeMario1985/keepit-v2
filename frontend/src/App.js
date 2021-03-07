@@ -1,8 +1,11 @@
 import { Route, Switch } from 'react-router-dom'
 import NewKeepitPage from './Pages/NewKeepitPage'
 import HomePage from './Pages/HomePage'
+import LoginForm from './Components/Forms/LoginForm'
 import KeepitDetailPage from './Pages/KeepitDetailPage'
 import styled from 'styled-components/macro'
+import useToken from './Hooks/useToken'
+
 const StyledAppWrapper = styled.div`
   height: 100vh;
   width: 100%;
@@ -14,6 +17,11 @@ const StyledAppWrapper = styled.div`
   padding-bottom: 100px;
 `
 function App() {
+  const { token, setToken } = useToken()
+  if (!token) {
+    return <LoginForm setToken={setToken} />
+  }
+
   return (
     <StyledAppWrapper>
       <Switch>

@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 /styleguide
-
+/public/images
 # testing
 /coverage
 
