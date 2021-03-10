@@ -6,21 +6,25 @@ Button.propTypes = {
   buttonText: PropTypes.string.isRequired,
 }
 
-export default function Button({ onClick, buttonText }) {
+export default function Button({ onClick, children }) {
   const bgColor = 'var(--color-primary)'
 
   return (
     <StyledButton bgColor={bgColor} onClick={onClick}>
-      {buttonText}
+      {children}
     </StyledButton>
   )
 }
 
 const StyledButton = styled.button`
   background-color: ${(props) => props.bgColor};
+  border: none;
+  min-height: 40px;
+  min-width: 100px;
+  width: 100%;
+
   font-weight: 400;
   color: white;
-  min-width: 100px;
   padding: 8px 20px 8px 20px;
   border-radius: 5px;
   text-transform: uppercase;

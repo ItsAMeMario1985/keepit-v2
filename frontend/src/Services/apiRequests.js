@@ -1,11 +1,8 @@
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
 
-export function apiGetAllKeepits() {
-  const body = {
-    email: 'user@email',
-    password: 'test',
-  }
-  return requestApi(body, `${apiBaseUrl}/keepit/getall`, 'POST')
+export function apiGetAllKeepits(token) {
+  console.log(apiBaseUrl)
+  return requestApi('', `${apiBaseUrl}/keepit/getall`, 'GET', token)
 }
 
 export function apiGetVisionLabels(body) {
@@ -24,22 +21,29 @@ export function apiDeleteKeepit(id) {
   return requestApi('', `${apiBaseUrl}/keepit/delete/` + id, 'POST')
 }
 
-export function requestApi(body, url, method) {
+export function requestApi(body, url, method, token) {
   // console.log('Api Request - url', url)
   // console.log('Api Request - body', body)
   // console.log('Api Request - method', method)
 
-  const myHeaders = new Headers()
-  let requestOptions = ''
+  var myHeaders = new Headers()
   myHeaders.append('Content-Type', 'application/json')
+  myHeaders.append('token', token)
 
-  if (method === 'POST') {
-    requestOptions = {
-      method: method,
-      headers: myHeaders,
-      body: JSON.stringify(body),
-      redirect: 'follow',
-    }
+  var requestOptions = {
+    method: method,
+    headers: myHeaders,
+
+    redirect: 'follow',
   }
+
+  // if (method === 'POST') {
+  //   requestOptions = {
+  //     method: method,
+  //     headers: myHeaders,
+  //     body: JSON.stringify(body),
+  //     redirect: 'follow',
+  //   }
+  // }
   return fetch(url, requestOptions).then((response) => response.json())
 }

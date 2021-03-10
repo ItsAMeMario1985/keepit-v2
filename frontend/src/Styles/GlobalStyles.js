@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components/macro'
 
 export default createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 * {
     box-sizing: border-box;
@@ -32,26 +32,30 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
 
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 ol, ul {
     list-style: none;
 }
+
 blockquote, q {
     quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -60,7 +64,6 @@ table {
 textarea:focus, input:focus, button:focus{
     outline: none;
 }
-
 
 /*************/
 
@@ -80,12 +83,12 @@ body {
     color: var(--color-text);
     background-color: #414141;
 }
+
 input[type='text'],
 input[type='number'],
 textarea {
   font-size: 16px;
 }
-
 
 
 `
