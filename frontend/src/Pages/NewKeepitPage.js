@@ -22,6 +22,7 @@ import {
 import setBase64 from '../Util/setBase64'
 
 import useTags from '../Hooks/useTags'
+import useToken from '../Hooks/useToken'
 import useOverlay from '../Hooks/useOverlay'
 import useKeepit from '../Hooks/useKeepit'
 import useGeolocation from '../Hooks/useGeolocation'
@@ -33,6 +34,7 @@ export default function NewKeepitPage() {
   const [rated, setRated] = useState([])
   const [imageIds, setImageIds] = useState([])
   const [ready4upload, setReady4upload] = useState(false)
+  const { token, setToken } = useToken()
 
   const {
     overlayStatus,
@@ -148,11 +150,9 @@ export default function NewKeepitPage() {
   function handleSaveKeepit() {
     if (ready4upload) {
       const request = {
-        email: 'user@email',
-        password: 'test',
-        addedTags,
-        imageIds,
-        rated,
+        tags: addedTags,
+        images: imageIds,
+        rating: rated,
         geolocation,
       }
       saveKeepit(request)
@@ -166,9 +166,9 @@ export default function NewKeepitPage() {
         </StyledSaveOverlay>
       )
       setOverlayStatus(true)
-      setTimeout(function () {
-        history.push('/')
-      }, 1500)
+      // setTimeout(function () {
+      //   history.push('/')
+      // }, 1500)
     } else {
       alert('Image(s) not uploaded yet. Wait a few seconds please.')
     }
@@ -183,13 +183,13 @@ export default function NewKeepitPage() {
   }
 
   function uploadImages(images) {
+    console.log('UPLOAD FIRST TIME')
     const files = images
     const labelRequest = {
-      email: 'user@email',
-      password: 'test',
       files,
     }
-    apiUploadImages(labelRequest)
+
+    apiUploadImages(token, labelRequest)
       .then((result) => setImageIds(result.ids))
       .catch((error) => console.log('error', error))
   }

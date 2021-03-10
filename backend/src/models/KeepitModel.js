@@ -5,6 +5,14 @@ const KeepitSchema = mongoose.Schema({
     type: String,
     default: 0,
   },
+  city: {
+    type: String,
+    default: 0,
+  },
+  country: {
+    type: String,
+    default: 0,
+  },
   rating: {
     type: Number,
     default: 0,

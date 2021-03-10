@@ -38,7 +38,7 @@ export default function KeepitDetailPage({ props }) {
 
   let imageUrl = ImageNotFoundImg
   if (keepit.images) {
-    imageUrl = apiBaseUrl + '/' + keepit.images[0]
+    imageUrl = apiBaseUrl + '/' + keepit.images[0].path
   }
 
   function handleDelete() {

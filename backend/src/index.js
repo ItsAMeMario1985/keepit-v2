@@ -18,7 +18,7 @@ mongoose
 const app = express()
 app.use(cors())
 app.use(express.json({ limit: '200mb' }))
-app.use(requestLogger())
+//app.use(requestLogger())
 app.use(express.static('src/public'))
 app.get('/', (req, res) => {
   res.send('Hello World!')

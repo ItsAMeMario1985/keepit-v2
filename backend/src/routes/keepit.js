@@ -15,7 +15,7 @@ const Tag = require('../models/TagModel')
  */
 
 router.post(
-  '/add',
+  '/save',
   [
     check('images', 'No given image').isLength({
       min: 1,
@@ -32,7 +32,6 @@ router.post(
 
     try {
       const user = await User.findById(req.user.id)
-
       const keepit = new Keepit({
         submitted: req.body.submitted,
         rating: req.body.rating,
@@ -55,7 +54,8 @@ router.post(
       const images = req.body.images
       images.forEach((image) => {
         let newImage = new Image({
-          path: image.path,
+          path: '/images/' + image + '.webp',
+          id: image,
           keepitId: keepit._id,
         })
         keepit.images.push(newImage)

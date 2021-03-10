@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { firstToUpper } from '../Util/string'
 import { apiGetVisionLabels } from '../Services/apiRequests.js'
+import useToken from '../Hooks/useToken'
 
 export default function useTags() {
   const [tags, setTags] = useState([])
 
   const [customTags, setCustomTags] = useState([])
   const [apiTags, setApiTags] = useState([])
+  const { token } = useToken()
 
   useEffect(() => {
     setTags([...tags, ...apiTags])
@@ -30,11 +32,10 @@ export default function useTags() {
 
   function loadApiTags(imageIds) {
     const labelRequest = {
-      email: 'user@email',
-      password: 'test',
       imageIds,
     }
-    apiGetVisionLabels(labelRequest)
+
+    apiGetVisionLabels(token, labelRequest)
       .then((result) => handleApiTags(result))
       .catch((error) => console.log('error', error))
   }
