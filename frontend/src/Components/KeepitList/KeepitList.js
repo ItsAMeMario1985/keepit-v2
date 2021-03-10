@@ -20,35 +20,38 @@ export default function KeepitList({ keepits, className }) {
   }
 
   function gotoDetail(keepit) {
-    history.push('/detail/' + keepit.id, { keepit: keepit })
+    history.push('/detail/' + keepit._id, { keepit: keepit })
   }
 
   return (
     <StyledUl className={className}>
-      {keepits.map((keepit, index) => (
-        <li key={keepit.id}>
-          <StyledImg
-            key={keepit.id}
-            src={
-              keepit.images
-                ? apiBaseUrl + '/' + keepit.images[0].replace('.', '-thumb.')
-                : ImageNotFoundImg
-            }
-            alt=""
-            onClick={() => gotoDetail(keepit)}
-            data-testid="TestKeepitImg"
-          ></StyledImg>
-          <StyledStarRating key={keepit.id + 'rate'}>
-            {[...Array(keepit.rated)].map((index) => (
-              <StarIcon
-                key={uuidv4()}
-                width="5"
-                fill="var(--color-primary)"
-              ></StarIcon>
-            ))}
-          </StyledStarRating>
-        </li>
-      ))}
+      {keepits &&
+        keepits.map((keepit, index) => (
+          <li key={keepit._id}>
+            <StyledImg
+              key={keepit._id}
+              src={
+                keepit.images
+                  ? apiBaseUrl +
+                    '/' +
+                    keepit.images[0].path.replace('.', '_thumb.')
+                  : ImageNotFoundImg
+              }
+              alt=""
+              onClick={() => gotoDetail(keepit)}
+              data-testid="TestKeepitImg"
+            ></StyledImg>
+            <StyledStarRating key={keepit._id + 'rate'}>
+              {[...Array(keepit.rated)].map((index) => (
+                <StarIcon
+                  key={uuidv4()}
+                  width="5"
+                  fill="var(--color-primary)"
+                ></StarIcon>
+              ))}
+            </StyledStarRating>
+          </li>
+        ))}
     </StyledUl>
   )
 }

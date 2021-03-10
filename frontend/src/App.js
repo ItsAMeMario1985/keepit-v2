@@ -18,6 +18,7 @@ const StyledAppWrapper = styled.div`
 `
 function App() {
   const { token, setToken } = useToken()
+  console.log(token)
   if (!token) {
     return <LoginForm setToken={setToken} />
   }

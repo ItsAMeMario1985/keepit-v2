@@ -34,7 +34,6 @@ const sharp = require('sharp');
  */
 router.post('/add', auth, async (req, res) => {
   try {
-    console.log('image add...');
     const user = await User.findById(req.user.id);
     console.log(user);
     res.json(user);
@@ -53,14 +52,14 @@ router.post('/add', auth, async (req, res) => {
 function saveImage(file, name) {
   console.log('saveImage');
   var base64result = file.split(',')[1];
-  fs.writeFileSync('./src/public/images/' + name + '.webp', base64result, 'base64', function (err) {
+  fs.writeFileSync('./public/images/' + name + '.webp', base64result, 'base64', function (err) {
     console.log(err);
   });
 }
 
 function saveThumbnail(name) {
   console.log('saveThumb');
-  sharp('./src/public/images/' + name + '.webp').resize(300).toFile('./src/public/images/' + name + '_thumb.webp', (err, info) => {
+  sharp('./public/images/' + name + '.webp').resize(300).toFile('./public/images/' + name + '_thumbnail.webp', (err, info) => {
     console.log(console.log('Error while resizing:', err));
   });
 }
@@ -73,7 +72,7 @@ router.post('/upload', auth, async (req, res) => {
     var name = (0, _uuid.v4)();
     await saveImage(req.body.files[0], name);
     await saveThumbnail(name);
-    res.json(name);
+    res.json(user);
   } catch (e) {
     res.send({
       message: 'Error in Fetching user'

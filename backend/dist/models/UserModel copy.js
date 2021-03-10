@@ -11,10 +11,14 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  keepits: [{
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  },
+  images: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Keepit'
+    ref: 'Images'
   }]
 }); // export model user with UserSchema
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('user', UserSchema);

@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 //const user = require("./routes/user"); //new addition
 import userRoute from './routes/user'
 import imageRoute from './routes/image'
+import keepitRoute from './routes/keepit'
 import requestLogger from './middleware/requestLogger'
 import cors from 'cors'
 
@@ -17,11 +18,13 @@ mongoose
 const app = express()
 app.use(cors())
 app.use(express.json({ limit: '200mb' }))
-//app.use(requestLogger())
+app.use(requestLogger())
+app.use(express.static('src/public'))
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 app.use('/user', userRoute)
+app.use('/keepit', keepitRoute)
 app.use('/image', imageRoute)
 
 app.listen(4000, () =>

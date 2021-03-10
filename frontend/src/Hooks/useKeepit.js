@@ -4,10 +4,12 @@ import {
   apiSaveKeepit,
   apiGetAllKeepits,
 } from '../Services/apiRequests.js'
+import useToken from '../Hooks/useToken'
 
 export default function useKeepit() {
   const [keepits, setKeepits] = useState([])
   const [rawKeepits, setRawKeepits] = useState([])
+  const { token } = useToken()
 
   return {
     rawKeepits,
@@ -31,12 +33,14 @@ export default function useKeepit() {
   }
 
   function loadKeepitsFromApi() {
-    apiGetAllKeepits()
+    apiGetAllKeepits(token)
       .then((result) => handleApiKeepits(result))
       .catch((error) => console.log('error', error))
   }
 
   function handleApiKeepits(result) {
+    console.log('result', result)
+
     setKeepits(
       result.sort(function (a, b) {
         return b.id - a.id

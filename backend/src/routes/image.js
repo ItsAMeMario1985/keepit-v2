@@ -20,6 +20,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 router.post('/add', auth, async (req, res) => {
   try {
+    console.log('image add...')
     const user = await User.findById(req.user.id)
     console.log(user)
     res.json(user)
@@ -35,9 +36,10 @@ router.post('/add', auth, async (req, res) => {
  */
 
 function saveImage(file, name) {
+  console.log('saveImage')
   var base64result = file.split(',')[1]
   fs.writeFileSync(
-    './public/images/' + name + '.webp',
+    './src/public/images/' + name + '.webp',
     base64result,
     'base64',
     function (err) {
@@ -47,9 +49,10 @@ function saveImage(file, name) {
 }
 
 function saveThumbnail(name) {
-  sharp('./public/images/' + name + '.webp')
+  console.log('saveThumb')
+  sharp('./src/public/images/' + name + '.webp')
     .resize(300)
-    .toFile('./public/images/' + name + '_thumbnail.webp', (err, info) => {
+    .toFile('./src/public/images/' + name + '_thumb.webp', (err, info) => {
       console.log(console.log('Error while resizing:', err))
     })
 }
@@ -59,22 +62,9 @@ router.post('/upload', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id)
     var name = uuidv4()
-    saveImage(req.body.files[0], name)
-    saveThumbnail(name)
-    // fs.writeFileSync(
-    //   './public/images/' + name + '.webp',
-    //   base64result,
-    //   'base64',
-    //   function (err) {
-    //     console.log(err)
-    //   }
-    // )
-    // sharp('./public/images/' + name + '.webp')
-    // .resize(300)
-    // .toFile('./public/images/' + name + '_thumbnail.webp', (err, info) => {
-    //   console.log(console.log('Error while resizing:', err))
-    // })
-    res.json(user)
+    await saveImage(req.body.files[0], name)
+    await saveThumbnail(name)
+    res.json(name)
   } catch (e) {
     res.send({ message: 'Error in Fetching user' })
   }

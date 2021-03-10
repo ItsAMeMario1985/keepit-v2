@@ -1,19 +1,19 @@
 const mongoose = require('mongoose')
 
 const ImageSchema = mongoose.Schema({
+  keepitId: {
+    type: String,
+    required: true,
+  },
   path: {
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Keepit',
   },
 })
 
 // export model user with ImageSchema
-module.exports = mongoose.model('image', ImageSchema)
+module.exports = mongoose.model('Image', ImageSchema)
