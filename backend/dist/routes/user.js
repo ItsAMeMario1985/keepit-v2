@@ -63,7 +63,7 @@ router.post('/signup', [check('email', 'Please enter a valid email').isEmail(), 
       }
     };
     jwt.sign(payload, 'randomString', {
-      expiresIn: 50000
+      expiresIn: 5000000
     }, (err, token) => {
       if (err) throw err;
       res.status(200).json({

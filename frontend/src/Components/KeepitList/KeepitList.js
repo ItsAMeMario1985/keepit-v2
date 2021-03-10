@@ -32,9 +32,7 @@ export default function KeepitList({ keepits, className }) {
               key={keepit._id}
               src={
                 keepit.images
-                  ? apiBaseUrl +
-                    '/' +
-                    keepit.images[0].path.replace('.', '_thumb.')
+                  ? apiBaseUrl + keepit.images[0].path.replace('.', '_thumb.')
                   : ImageNotFoundImg
               }
               alt=""
@@ -42,7 +40,7 @@ export default function KeepitList({ keepits, className }) {
               data-testid="TestKeepitImg"
             ></StyledImg>
             <StyledStarRating key={keepit._id + 'rate'}>
-              {[...Array(keepit.rated)].map((index) => (
+              {[...Array(keepit.rating)].map((index) => (
                 <StarIcon
                   key={uuidv4()}
                   width="5"

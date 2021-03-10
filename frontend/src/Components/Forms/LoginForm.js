@@ -33,11 +33,13 @@ export default function LoginForm({ setToken }) {
         <StyledLogo width="188"></StyledLogo>
         <StyledInput
           type="email"
+          name="email"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
         ></StyledInput>
         <StyledInput
           type="password"
+          name="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
         ></StyledInput>

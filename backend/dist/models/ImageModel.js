@@ -11,6 +11,10 @@ const ImageSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  id: {
+    type: String,
+    required: true
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Keepit'

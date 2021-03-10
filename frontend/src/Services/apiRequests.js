@@ -2,48 +2,83 @@ const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
 
 export function apiGetAllKeepits(token) {
   console.log(apiBaseUrl)
-  return requestApi('', `${apiBaseUrl}/keepit/getall`, 'GET', token)
+  return requestApi({
+    url: `${apiBaseUrl}/keepit/getall`,
+    method: 'GET',
+    token,
+  })
 }
 
-export function apiGetVisionLabels(body) {
-  return requestApi(body, `${apiBaseUrl}/images/gettags`, 'POST')
+export function apiGetVisionLabels(token, body) {
+  console.log('apiGetVisionLabels')
+  return requestApi({
+    url: `${apiBaseUrl}/image/gettags`,
+    method: 'POST',
+    token,
+    body,
+  })
 }
 
-export function apiUploadImages(body) {
-  return requestApi(body, `${apiBaseUrl}/images/upload`, 'POST')
+export function apiUploadImages(token, body) {
+  return requestApi({
+    url: `${apiBaseUrl}/image/upload`,
+    method: 'POST',
+    token,
+    body,
+  })
 }
 
-export function apiSaveKeepit(body) {
-  return requestApi(body, `${apiBaseUrl}/keepit/add`, 'POST')
+export function apiSaveKeepit(token, body) {
+  return requestApi({
+    url: `${apiBaseUrl}/keepit/save`,
+    method: 'POST',
+    token,
+    body,
+  })
 }
 
-export function apiDeleteKeepit(id) {
-  return requestApi('', `${apiBaseUrl}/keepit/delete/` + id, 'POST')
+export function apiDeleteKeepit(token, id) {
+  return requestApi('', `${apiBaseUrl}/keepit/delete/` + id, 'POST', token)
 }
 
-export function requestApi(body, url, method, token) {
-  // console.log('Api Request - url', url)
-  // console.log('Api Request - body', body)
-  // console.log('Api Request - method', method)
+export function requestApi(props) {
+  console.log('Api Request - url', props.url)
+  console.log('Api Request - body', props.body)
+  console.log('Api Request - method', props.method)
+  console.log('Api Request - token', props.token)
 
-  var myHeaders = new Headers()
+  const myHeaders = new Headers()
   myHeaders.append('Content-Type', 'application/json')
-  myHeaders.append('token', token)
-
-  var requestOptions = {
-    method: method,
-    headers: myHeaders,
-
-    redirect: 'follow',
+  myHeaders.append('token', props.token)
+  let requestOptions = {}
+  if (props.body) {
+    requestOptions = {
+      method: props.method,
+      headers: myHeaders,
+      body: JSON.stringify(props.body),
+      redirect: 'follow',
+    }
+  } else {
+    requestOptions = {
+      method: props.method,
+      headers: myHeaders,
+      redirect: 'follow',
+    }
   }
 
-  // if (method === 'POST') {
-  //   requestOptions = {
-  //     method: method,
-  //     headers: myHeaders,
-  //     body: JSON.stringify(body),
-  //     redirect: 'follow',
-  //   }
-  // }
-  return fetch(url, requestOptions).then((response) => response.json())
+  return fetch(props.url, requestOptions).then((response) => {
+    //console.log(response)
+    if (response.status === 401) {
+      //sessionStorage.removeItem('token') // rework!
+      throw new Error('401')
+    }
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+    return response.json()
+  })
 }
+
+/*
+  return fetch(url, requestOptions).then((response) => response.json())
+*/

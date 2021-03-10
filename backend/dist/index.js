@@ -26,8 +26,8 @@ const app = (0, _express.default)();
 app.use((0, _cors.default)());
 app.use(_express.default.json({
   limit: '200mb'
-}));
-app.use((0, _requestLogger.default)());
+})); //app.use(requestLogger())
+
 app.use(_express.default.static('src/public'));
 app.get('/', (req, res) => {
   res.send('Hello World!');
