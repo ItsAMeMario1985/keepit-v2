@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import { ReactComponent as Logo } from '../../Assets/logo.svg'
 import Button from '../Buttons/Button'
-
 async function loginUser(credentials) {
-  return fetch('http://localhost:4000/user/login', {
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
+
+  return fetch(apiBaseUrl + '/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ export default function LoginForm({ setToken }) {
         ></StyledInput>
         <Button type="submit">Login</Button>
         <span>
-          No account yet? <a href="">Register now!</a>
+          No account yet? <a href="#">Register now!</a>
         </span>
       </StyledForm>
     </StyledLayout>

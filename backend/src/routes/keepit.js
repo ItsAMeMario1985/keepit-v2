@@ -31,13 +31,17 @@ router.post(
     }
 
     try {
+      // Get User
       const user = await User.findById(req.user.id)
+
+      // New Keepit
       const keepit = new Keepit({
         submitted: req.body.submitted,
         rating: req.body.rating,
         userId: user._id,
       })
 
+      // Tags
       const tags = req.body.tags
         ? req.body.tags
         : [{ value: 'Untagged', isCustom: true }]
@@ -51,6 +55,7 @@ router.post(
         newTag.save()
       })
 
+      // Images
       const images = req.body.images
       images.forEach((image) => {
         let newImage = new Image({
@@ -63,7 +68,6 @@ router.post(
       })
 
       user.keepits.push(keepit)
-
       await keepit.save()
       await user.save()
 

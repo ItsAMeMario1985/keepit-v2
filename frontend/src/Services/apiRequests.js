@@ -65,20 +65,36 @@ export function requestApi(props) {
       redirect: 'follow',
     }
   }
+  return fetch(props.url, requestOptions).then((response) => response.json())
+  // return fetch(props.url, requestOptions).then((response) => {
+  //   //console.log(response)
+  //   if (response.status === 401) {
+  //     sessionStorage.removeItem('token') // rework!
+  //     //throw new Error('Invalid Token')
 
-  return fetch(props.url, requestOptions).then((response) => {
-    //console.log(response)
+  //     return response.json()
+  //   }
+  //   if (!response.ok) {
+  //     throw new Error('Network response was not ok')
+  //   }
+  //   return response.json()
+  // })
+}
+
+/*
+  return fetch(url, requestOptions).then((response) => response.json())
+
+
+     //console.log(response)
     if (response.status === 401) {
       //sessionStorage.removeItem('token') // rework!
-      throw new Error('401')
+      //throw new Error('Invalid Token')
+      console.log(response)
+      return response.json()
     }
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }
     return response.json()
-  })
-}
 
-/*
-  return fetch(url, requestOptions).then((response) => response.json())
 */

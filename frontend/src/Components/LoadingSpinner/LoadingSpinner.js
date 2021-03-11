@@ -14,9 +14,10 @@ export default function LoadingSpinner({ className }) {
 }
 
 const StyledLoadingWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   width: 100%;
+  height: 100%;
 `
 
 const StyledLoadingDiv = styled.div`
