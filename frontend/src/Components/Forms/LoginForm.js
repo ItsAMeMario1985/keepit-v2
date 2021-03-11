@@ -71,6 +71,7 @@ const StyledLayout = styled.div`
   place-items: center;
   height: 100vh;
   background-color: #f4f4f4;
+  max-width: 500px;
 `
 
 const StyledForm = styled.form`
