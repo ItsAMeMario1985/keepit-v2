@@ -122,12 +122,11 @@ const StyledFilterArea = styled.div`
 const StyledLayout = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  background-color: white;
   height: 100%;
   top: 0;
   width: 100%;
   font-size: 112.5%;
-  background-color: white;
   overflow: hidden;
   position: fixed;
   max-width: 500px;

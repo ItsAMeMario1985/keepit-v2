@@ -64,13 +64,20 @@ const StyledInput = styled.input`
   font-size: 16px;
   background-color: #f4f4f4;
   width: 250px;
+  color: var(--color-secondary);
 `
 
 const StyledLayout = styled.div`
   display: grid;
   place-items: center;
-  height: 100vh;
   background-color: #f4f4f4;
+
+  height: 100%;
+  top: 0;
+  width: 100%;
+  font-size: 112.5%;
+  overflow: hidden;
+  position: fixed;
   max-width: 500px;
 `
 
