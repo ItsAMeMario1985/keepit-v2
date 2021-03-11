@@ -21,7 +21,7 @@ export default function Taglist({
 
   function IsCustomIcon(tag) {
     if (showIsCustom) {
-      if (tag.isCustom) {
+      if (tag.isCustom === 'true') {
         return <UserIcon />
       } else {
         return <CloudIcon fill="#fff" />

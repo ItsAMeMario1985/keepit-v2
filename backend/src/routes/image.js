@@ -1,16 +1,13 @@
-const express = require('express')
-const { check, validationResult } = require('express-validator/check')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const router = express.Router()
-var getDirName = require('path').dirname
-
-const auth = require('../middleware/auth')
-const User = require('../models/UserModel')
-const Image = require('../models/ImageModel')
-const fs = require('fs')
-const sharp = require('sharp')
+import { check, validationResult } from 'express-validator/check'
+import { Router } from 'express'
+import auth from '../middleware/auth'
+import User from '../models/UserModel'
+import Image from '../models/ImageModel'
+import fs from 'fs'
+import sharp from 'sharp'
 import { v4 as uuidv4 } from 'uuid'
+import loadApiVisionLabels from '../services/cloudVisionApi'
+const router = new Router()
 
 /**
  * @method - POST
@@ -20,12 +17,38 @@ import { v4 as uuidv4 } from 'uuid'
 
 router.post('/gettags', auth, async (req, res) => {
   try {
-    console.log('get image Tags')
-    const user = await User.findById(req.user.id)
-    console.log(user)
-    res.json({ labels: ['Brown', 'Photograph', 'White'] })
+    let ids = req.body.imageIds
+
+    // Receive labels of images
+    const labelPromises = []
+    ids.forEach((id) => {
+      labelPromises.push(
+        loadApiVisionLabels('./src/public/images/' + id + '.webp')
+      )
+    })
+    var allLabels = await Promise.all(labelPromises)
+
+    // Merge if multiple images were uploaded
+    var mergedLabels
+    if (allLabels.length > 1) {
+      console.log('////// multiple images...')
+      mergedLabels = [...allLabels[0], ...allLabels[1]]
+    } else {
+      console.log('////// single images...')
+      mergedLabels = [...allLabels[0]]
+    }
+
+    // Filter score > X
+    var filteredLabels = mergedLabels.filter((label) => label.score > 0.8)
+
+    // Create response
+    var response = filteredLabels.map((filteredLabel) => {
+      return filteredLabel.description
+    })
+
+    res.json({ labels: response })
   } catch (e) {
-    res.send({ message: 'Error in Fetching user' })
+    res.send({ message: 'Error in loading tags' })
   }
 })
 
@@ -47,16 +70,12 @@ router.post('/upload', auth, async (req, res) => {
       saveThumbnail(name)
     })
 
-    console.log(responseIds)
-    // await saveImage(req.body.files[0], name)
-    // await saveThumbnail(name)
     res.json({ ids: responseIds })
   } catch (e) {
-    res.send({ message: 'Error in Fetching user' })
+    res.send({ message: 'Error in uploading' })
   }
 
   function saveImage(file, name) {
-    console.log('saveImage')
     var base64result = file.split(',')[1]
     fs.writeFileSync(
       './src/public/images/' + name + '.webp',
@@ -69,12 +88,10 @@ router.post('/upload', auth, async (req, res) => {
   }
 
   function saveThumbnail(name) {
-    console.log('saveThumb')
     sharp('./src/public/images/' + name + '.webp')
+      .rotate()
       .resize(300)
-      .toFile('./src/public/images/' + name + '_thumb.webp', (err, info) => {
-        console.log(console.log('Error while resizing:', err))
-      })
+      .toFile('./src/public/images/' + name + '_thumb.webp')
   }
 })
 

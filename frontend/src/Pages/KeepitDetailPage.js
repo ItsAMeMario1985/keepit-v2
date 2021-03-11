@@ -56,8 +56,8 @@ export default function KeepitDetailPage({ props }) {
   }
 
   function showDate() {
-    if (keepit.date) {
-      var date = keepit.date.date.split(' ')
+    if (keepit.createdAt) {
+      var date = keepit.createdAt.split('T')
       return date[0]
     } else {
       return 'Long time ago'
@@ -65,7 +65,7 @@ export default function KeepitDetailPage({ props }) {
   }
 
   function showLocation() {
-    if (keepit.city) {
+    if (keepit.city !== '0') {
       return keepit.city + ', ' + keepit.country
     } else {
       return 'In a galaxy far, far away'
@@ -112,7 +112,7 @@ export default function KeepitDetailPage({ props }) {
         <StyledTagArea>
           <TagIcon />
           <StyledTagHeadline>Tags</StyledTagHeadline>
-          <StyledStarRating rating={keepit.rated} />
+          <StyledStarRating rating={keepit.rating} />
           <ContentSeparator></ContentSeparator>
           <Taglist
             tags={tags}

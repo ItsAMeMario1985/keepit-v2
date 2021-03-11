@@ -9,7 +9,16 @@ import useToken from '../Hooks/useToken'
 export default function useKeepit() {
   const [keepits, setKeepits] = useState([])
   const [rawKeepits, setRawKeepits] = useState([])
-  const { token } = useToken()
+  const { token, deleteToken } = useToken()
+
+  function handleError(response) {
+    if (response.error === 'Invalid Token') {
+      console.log('error handling started')
+      deleteToken()
+    } else {
+      return response
+    }
+  }
 
   return {
     rawKeepits,
@@ -26,7 +35,7 @@ export default function useKeepit() {
       .catch((error) => console.log('error', error))
   }
 
-  function saveKeepit(request, handleApiTags) {
+  function saveKeepit(request) {
     apiSaveKeepit(token, request)
       .then((result) => console.log(result))
       .catch((error) => console.log('error', error))
@@ -34,7 +43,7 @@ export default function useKeepit() {
 
   function loadKeepitsFromApi() {
     apiGetAllKeepits(token)
-      .then((result) => handleApiKeepits(result))
+      .then((result) => handleApiKeepits(handleError(result)))
       .catch((error) => console.log(error))
   }
 

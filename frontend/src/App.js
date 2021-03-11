@@ -5,6 +5,7 @@ import LoginForm from './Components/Forms/LoginForm'
 import KeepitDetailPage from './Pages/KeepitDetailPage'
 import styled from 'styled-components/macro'
 import useToken from './Hooks/useToken'
+import { useEffect } from 'react'
 
 const StyledAppWrapper = styled.div`
   height: 100vh;
@@ -18,7 +19,7 @@ const StyledAppWrapper = styled.div`
 `
 function App() {
   const { token, setToken } = useToken()
-  console.log(token)
+
   if (!token) {
     return <LoginForm setToken={setToken} />
   }

@@ -166,9 +166,9 @@ export default function NewKeepitPage() {
         </StyledSaveOverlay>
       )
       setOverlayStatus(true)
-      // setTimeout(function () {
-      //   history.push('/')
-      // }, 1500)
+      setTimeout(function () {
+        history.push('/')
+      }, 1500)
     } else {
       alert('Image(s) not uploaded yet. Wait a few seconds please.')
     }
