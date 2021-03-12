@@ -13,6 +13,14 @@ const KeepitSchema = mongoose.Schema({
     type: String,
     default: 0,
   },
+  latitude: {
+    type: String,
+    default: 0,
+  },
+  longitude: {
+    type: String,
+    default: 0,
+  },
   rating: {
     type: Number,
     default: 0,

@@ -1,12 +1,12 @@
-const express = require('express')
-const { check, validationResult } = require('express-validator/check')
-const router = express.Router()
-const auth = require('../middleware/auth')
-
-const User = require('../models/UserModel')
-const Keepit = require('../models/KeepitModel')
-const Image = require('../models/ImageModel')
-const Tag = require('../models/TagModel')
+import { check, validationResult } from 'express-validator/check'
+import { Router } from 'express'
+import auth from '../middleware/auth'
+import User from '../models/UserModel'
+import Keepit from '../models/KeepitModel'
+import Image from '../models/ImageModel'
+import Tag from '../models/TagModel'
+import geoCoding from '../services/geoCoding'
+const router = new Router()
 
 /**
  * @method - POST
@@ -53,6 +53,7 @@ router.post(
         })
         keepit.tags.push(newTag)
         newTag.save()
+        console.log('// Keeepit - Save - Tags - Check')
       })
 
       // Images
@@ -65,13 +66,25 @@ router.post(
         })
         keepit.images.push(newImage)
         newImage.save()
+        console.log('// Keeepit - Save - Images - Check')
       })
+
+      // Geolocation
+      if (req.body.geolocation.length > 1) {
+        const latitude = req.body.geolocation[0]
+        const longitude = req.body.geolocation[1]
+        var geoData = await geoCoding(latitude, longitude)
+        keepit.city = geoData.city
+        keepit.country = geoData.country
+        keepit.latitude = latitude
+        keepit.longitude = longitude
+      }
 
       user.keepits.push(keepit)
       await keepit.save()
       await user.save()
 
-      res.json(req.body)
+      res.json(keepit)
     } catch (e) {
       res.send({ message: 'Error: ' + e })
     }
