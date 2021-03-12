@@ -31,7 +31,7 @@ export default function KeepitList({ keepits, className }) {
             <StyledImg
               key={keepit._id}
               src={
-                keepit.images
+                keepit.images.length > 0
                   ? apiBaseUrl + keepit.images[0].path.replace('.', '_thumb.')
                   : ImageNotFoundImg
               }
