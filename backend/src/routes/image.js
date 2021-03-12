@@ -31,10 +31,8 @@ router.post('/gettags', auth, async (req, res) => {
     // Merge if multiple images were uploaded
     var mergedLabels
     if (allLabels.length > 1) {
-      console.log('////// multiple images...')
       mergedLabels = [...allLabels[0], ...allLabels[1]]
     } else {
-      console.log('////// single images...')
       mergedLabels = [...allLabels[0]]
     }
 
