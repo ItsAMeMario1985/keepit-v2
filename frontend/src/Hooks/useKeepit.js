@@ -30,6 +30,7 @@ export default function useKeepit() {
   }
 
   function deleteKeepit(id) {
+    console.log('in delete', id)
     apiDeleteKeepit(token, id)
       .then((result) => console.log(result))
       .catch((error) => console.log('error', error))
