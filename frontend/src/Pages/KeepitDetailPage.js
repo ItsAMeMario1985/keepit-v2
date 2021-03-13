@@ -42,7 +42,7 @@ export default function KeepitDetailPage({ props }) {
   }
 
   function handleDelete() {
-    deleteKeepit(keepit.id)
+    deleteKeepit(keepit._id)
     setOverlayContent(
       <StyledDeleteOverlay>
         DELETE

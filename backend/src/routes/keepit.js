@@ -122,4 +122,42 @@ router.get('/getAll', auth, async (req, res) => {
   }
 })
 
+/**
+ * @method - DELETE
+ * @description - Delete keepit
+ * @param - /keepit/delete:id
+ */
+
+router.delete('/delete/:id', auth, async (req, res) => {
+  const { id } = req.params
+
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array(),
+    })
+  }
+
+  try {
+    Image.deleteMany({ keepitId: id }, function (err) {
+      if (err) console.log(err)
+      console.log('Images deleted')
+    })
+
+    Tag.deleteMany({ keepitId: id }, function (err) {
+      if (err) console.log(err)
+      console.log('Tags deleted')
+    })
+
+    Keepit.deleteOne({ _id: id }, function (err) {
+      if (err) console.log(err)
+      console.log('Keepit deleted')
+    })
+
+    res.send({ message: 'Deletion complete ' })
+  } catch (e) {
+    res.send({ message: 'Error: ' + e })
+  }
+})
+
 module.exports = router
