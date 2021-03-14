@@ -8,6 +8,29 @@ import Tag from '../models/TagModel'
 import geoCoding from '../services/geoCoding'
 const router = new Router()
 
+import keepitController from '../controllers/keepit'
+
+/**
+ * @method - POST
+ * @description - Add keepit
+ * @param - /keepit/getAll
+ */
+
+// geht zum controller & req kommt an....
+router.post('/getAll', keepitController.getAllKeepits)
+
+// router.post('/getAll', function (req, res) {
+//   console.log('// 1. GET ALL')
+//   const userID = auth
+//   console.log(userID)
+//   keepitController.getAllKeepits(req2, res2)
+// })
+
+// router.post('/getAll', function (req, res) {
+//   console.log('// 1. GET ALL')
+//   keepitController.getAllKeepits
+// })
+
 /**
  * @method - POST
  * @description - Add keepit
@@ -92,37 +115,6 @@ router.post(
 )
 
 /**
- * @method - POST
- * @description - Add keepit
- * @param - /keepit/getAll
- */
-
-router.get('/getAll', auth, async (req, res) => {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    })
-  }
-
-  try {
-    const user = await User.findById(req.user.id)
-    const keepits = await Keepit.find({ userId: user._id })
-      .populate('images tags')
-      .exec(function (err, keepitArr) {
-        if (err) return handleError(err)
-        var response = []
-        keepitArr.forEach((kt) => {
-          response.push(kt)
-        })
-        res.json(response)
-      })
-  } catch (e) {
-    res.send({ message: 'Error: ' + e })
-  }
-})
-
-/**
  * @method - DELETE
  * @description - Delete keepit
  * @param - /keepit/delete:id
@@ -161,3 +153,32 @@ router.delete('/delete/:id', auth, async (req, res) => {
 })
 
 module.exports = router
+
+/*
+
+router.get('/getAll', auth, async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array(),
+    })
+  }
+
+  try {
+    const user = await User.findById(req.user.id)
+    const keepits = await Keepit.find({ userId: user._id })
+      .populate('images tags')
+      .exec(function (err, keepitArr) {
+        if (err) return handleError(err)
+        var response = []
+        keepitArr.forEach((kt) => {
+          response.push(kt)
+        })
+        res.json(response)
+      })
+  } catch (e) {
+    res.send({ message: 'Error: ' + e })
+  }
+})
+
+*/

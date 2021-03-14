@@ -19,7 +19,7 @@ const app = express()
 
 app.use(cors())
 app.use(express.json({ limit: '200mb' }))
-//app.use(requestLogger())
+app.use(requestLogger())
 app.use(express.static('src/public'))
 app.use('/user', userRoute)
 app.use('/keepit', keepitRoute)
