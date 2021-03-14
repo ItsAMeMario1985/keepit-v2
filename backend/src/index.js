@@ -4,6 +4,8 @@ import userRoute from './routes/user'
 import imageRoute from './routes/image'
 import keepitRoute from './routes/keepit'
 import requestLogger from './middleware/requestLogger'
+import auth from './middleware/auth'
+
 import cors from 'cors'
 require('dotenv').config()
 
@@ -19,9 +21,10 @@ const app = express()
 
 app.use(cors())
 app.use(express.json({ limit: '200mb' }))
-app.use(requestLogger())
+//app.use(requestLogger())
 app.use(express.static('src/public'))
 app.use('/user', userRoute)
+//app.use(auth)
 app.use('/keepit', keepitRoute)
 app.use('/image', imageRoute)
 app.listen(4000, () =>
