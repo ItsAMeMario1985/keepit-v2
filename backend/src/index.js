@@ -1,10 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import userRoute from './routes/user'
+import cors from 'cors'
+import userRoute from './routes/user-route'
 import imageRoute from './routes/image-route'
 import keepitRoute from './routes/keepit-route'
 import requestLogger from './middleware/requestLogger'
-import cors from 'cors'
 require('dotenv').config()
 
 mongoose
@@ -22,7 +22,6 @@ app.use(express.json({ limit: '200mb' }))
 //app.use(requestLogger())
 app.use(express.static('src/public'))
 app.use('/user', userRoute)
-//app.use(auth)
 app.use('/keepit', keepitRoute)
 app.use('/image', imageRoute)
 app.listen(4000, () =>

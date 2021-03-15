@@ -1,6 +1,4 @@
-const auth = require('../middleware/auth')
 import KeepitService from '../services/keepit-service'
-import User from '../models/UserModel'
 
 module.exports = { getAll, save, deleteOne }
 

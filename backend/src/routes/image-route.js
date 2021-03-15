@@ -1,4 +1,3 @@
-import { check, validationResult } from 'express-validator/check'
 import { Router } from 'express'
 import auth from '../middleware/auth'
 import imageController from '../controllers/image-controller'

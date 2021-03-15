@@ -114,11 +114,3 @@ module.exports = {
   save,
   deleteOne,
 }
-
-// const testBlob = async (userId) => {
-//   return new Promise((resolve, reject) => {
-//     setTimeout(function () {
-//       resolve('done')
-//     }, 2000)
-//   })
-// }

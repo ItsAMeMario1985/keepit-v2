@@ -1,4 +1,3 @@
-const auth = require('../middleware/auth')
 import ImageService from '../services/image-service'
 import { v4 as uuidv4 } from 'uuid'
 

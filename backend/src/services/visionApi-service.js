@@ -1,10 +1,6 @@
-//import vision from ''@google-cloud/vision''
-//require('dotenv').config()
+import vision from '@google-cloud/vision'
 
 export default async function loadApiVisionLabels(path) {
-  // Imports the Google Cloud client library
-  const vision = require('@google-cloud/vision')
-
   // Creates a client
   const client = new vision.ImageAnnotatorClient({
     credentials: {

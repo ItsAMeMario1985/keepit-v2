@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
 export default function myAuth(token) {
   if (!token) return { error: 'Token not given' }

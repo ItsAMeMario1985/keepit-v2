@@ -1,4 +1,3 @@
-import { check, validationResult } from 'express-validator/check'
 import { Router } from 'express'
 import auth from '../middleware/auth'
 import keepitController from '../controllers/keepit-controller'
