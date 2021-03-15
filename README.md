@@ -1,7 +1,7 @@
 # Keepit
 "Stop forgetting, start keeping!"
 
-This is my capstone-poject for the web development bootcamp @ neue fische!
+This is my node-version of my capstone-poject for the web development bootcamp @ neue fische!
 
 <img src="https://github.com/mariothomsen/keepit/blob/master/readmev2.gif?raw=true" width="300px">
 
@@ -9,7 +9,14 @@ This is my capstone-poject for the web development bootcamp @ neue fische!
 - React
 - React Router
 - React Hooks
-- PHP / Symfony
+- Node.js / Express.js
 - Google Cloud Vision API
-- Google Map API
+- Google Geolocation API
+
+
+## Roadmap
+[] Add edit function (BE/FE)
+[] Implement job for deleting uploaded but not saved images (BE)
+[] Implement tests (BE)
+[] Handle errors (BE/FE)
 
