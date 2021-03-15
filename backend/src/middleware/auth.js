@@ -7,9 +7,10 @@ module.exports = function (req, res, next) {
   try {
     const decoded = jwt.verify(token, 'randomString')
     req.user = decoded.user
+    console.log('// Authentificated')
     next()
   } catch (e) {
-    console.error(e)
+    console.error('Invalid Token')
     res.status(401).send({ error: 'Invalid Token' })
   }
 }

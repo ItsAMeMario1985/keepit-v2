@@ -1,10 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import userRoute from './routes/user'
-import imageRoute from './routes/image'
-import keepitRoute from './routes/keepit'
-import requestLogger from './middleware/requestLogger'
 import cors from 'cors'
+import userRoute from './routes/user-route'
+import imageRoute from './routes/image-route'
+import keepitRoute from './routes/keepit-route'
+import requestLogger from './middleware/requestLogger'
 require('dotenv').config()
 
 mongoose
