@@ -6,6 +6,7 @@ import imageRoute from './routes/image-route'
 import keepitRoute from './routes/keepit-route'
 import requestLogger from './middleware/requestLogger'
 require('dotenv').config()
+import deleteUnusedImg from './jobs/deleteUnusedImg'
 
 mongoose
   .connect('mongodb://localhost:27017/keepitdb', {
@@ -18,12 +19,14 @@ mongoose
 const app = express()
 
 app.use(cors())
+
 app.use(express.json({ limit: '200mb' }))
 //app.use(requestLogger())
 app.use(express.static('src/public'))
 app.use('/user', userRoute)
 app.use('/keepit', keepitRoute)
 app.use('/image', imageRoute)
-app.listen(4000, () =>
+app.listen(4000, () => {
   console.log('Server is running on http://localhost:4000')
-)
+  deleteUnusedImg()
+})
