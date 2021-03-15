@@ -21,4 +21,4 @@ This is my node-version of my capstone-poject for the web development bootcamp @
 - [ ] Implement job for deleting uploaded but not saved images (BE)
 - [ ] Implement tests (BE)
 - [ ] Handle errors (BE/FE)
-
+- [ ] Implement Barcode-Scanner (BE/FE)
