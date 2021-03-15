@@ -15,6 +15,7 @@ This is my node-version of my capstone-poject for the web development bootcamp @
 
 
 ## Roadmap
+- [x] Implement Login/Token (jwt)
 - [x] Refactor BE structure
 - [ ] Add edit function (BE/FE)
 - [ ] Implement job for deleting uploaded but not saved images (BE)
