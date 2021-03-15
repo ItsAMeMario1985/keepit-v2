@@ -18,6 +18,7 @@ This is my node-version of my capstone-poject for the web development bootcamp @
 - [x] Implement Login/Token (jwt)
 - [x] Refactor BE structure
 - [ ] Implement Register (FE)
+- [ ] Improving tag results (BE)
 - [ ] Add edit function (BE/FE)
 - [ ] Implement job for deleting uploaded but not saved images (BE)
 - [ ] Implement tests (BE)
