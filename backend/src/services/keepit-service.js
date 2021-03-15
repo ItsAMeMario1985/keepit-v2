@@ -2,9 +2,9 @@ import Keepit from '../models/KeepitModel'
 import User from '../models/UserModel'
 import Image from '../models/ImageModel'
 import Tag from '../models/TagModel'
-import geoCoding from '../services/geoCoding'
+import geoCodingService from './geocoding-service'
 
-const getAll = async (userId) => {
+const getAll = (userId) => {
   console.log('// GetAll Service')
   return new Promise((resolve) => {
     try {
@@ -21,14 +21,6 @@ const getAll = async (userId) => {
     } catch (e) {
       resolve({ message: 'Error: ' + e })
     }
-  })
-}
-
-const testBlob = async (userId) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(function () {
-      resolve('done')
-    }, 2000)
   })
 }
 
@@ -77,7 +69,7 @@ const save = async (reqBody, userId) => {
     if (reqBody.geolocation.length > 1) {
       const latitude = reqBody.geolocation[0]
       const longitude = reqBody.geolocation[1]
-      var geoData = await geoCoding(latitude, longitude)
+      var geoData = await geoCodingService(latitude, longitude)
       keepit.city = geoData.city
       keepit.country = geoData.country
       keepit.latitude = latitude
@@ -93,8 +85,40 @@ const save = async (reqBody, userId) => {
   }
 }
 
+const deleteOne = (id) => {
+  console.log('// Delete Service: ' + id)
+  try {
+    Image.deleteMany({ keepitId: id }, function (err) {
+      if (err) console.log(err)
+      console.log('Images deleted')
+    })
+
+    Tag.deleteMany({ keepitId: id }, function (err) {
+      if (err) console.log(err)
+      console.log('Tags deleted')
+    })
+
+    Keepit.deleteOne({ _id: id }, function (err) {
+      if (err) console.log(err)
+      console.log('Keepit deleted')
+    })
+
+    return { message: 'Deletion complete ' }
+  } catch (e) {
+    return { message: 'Error: ' + e }
+  }
+}
+
 module.exports = {
   getAll,
-  testBlob,
   save,
+  deleteOne,
 }
+
+// const testBlob = async (userId) => {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(function () {
+//       resolve('done')
+//     }, 2000)
+//   })
+// }
