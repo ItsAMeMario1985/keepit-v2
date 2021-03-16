@@ -32,7 +32,7 @@ app.use('/api/user', userRoute)
 app.use('/api/keepit', keepitRoute)
 app.use('/api/image', imageRoute)
 
-app.listen(process.env.PORT || 4000, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log('Server (keepit-v2) is running on http://localhost:4000')
   deleteUnusedImg()
 })
