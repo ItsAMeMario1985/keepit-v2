@@ -9,12 +9,19 @@ require('dotenv').config()
 import deleteUnusedImg from './jobs/deleteUnusedImg'
 
 mongoose
-  .connect('mongodb://localhost:27017/keepitdb', {
+  .connect(process.env.mongoString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('Could not connect to MongoDB', error))
+// mongoose
+//   .connect('mongodb://localhost:27017/keepitdb', {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => console.log('Connected to MongoDB'))
+//   .catch((error) => console.error('Could not connect to MongoDB', error))
 
 const app = express()
 
@@ -33,6 +40,9 @@ app.use('/api/keepit', keepitRoute)
 app.use('/api/image', imageRoute)
 
 app.listen(5000, () => {
-  console.log('Server (keepit-v2) is running on http://localhost:4000')
+  console.log(
+    'Server (keepit-v2) is running on http://localhost:4000',
+    process.env.mongoString
+  )
   deleteUnusedImg()
 })
