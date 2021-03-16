@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KeepitList renders correctly 1`] = `
+<ul
+  class="KeepitList__StyledUl-sc-1db6amq-2 lnJtTs"
+>
+  <li>
+    <img
+      alt=""
+      class="KeepitList__StyledImg-sc-1db6amq-1 bA-Drmk"
+      data-testid="TestKeepitImg"
+      src="undefined/test-thumb.png"
+    />
+    <div
+      class="KeepitList__StyledStarRating-sc-1db6amq-0 iDCVPP"
+    >
+      <svg
+        fill="var(--color-primary)"
+        width="5"
+      >
+        star.svg
+      </svg>
+      <svg
+        fill="var(--color-primary)"
+        width="5"
+      >
+        star.svg
+      </svg>
+      <svg
+        fill="var(--color-primary)"
+        width="5"
+      >
+        star.svg
+      </svg>
+      <svg
+        fill="var(--color-primary)"
+        width="5"
+      >
+        star.svg
+      </svg>
+    </div>
+  </li>
+</ul>
+`;

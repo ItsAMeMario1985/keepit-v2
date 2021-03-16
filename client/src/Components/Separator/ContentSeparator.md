@@ -1,0 +1,3 @@
+```js
+<ContentSeperator text="test" />
+```

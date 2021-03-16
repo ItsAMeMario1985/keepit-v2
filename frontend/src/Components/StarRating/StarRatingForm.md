@@ -1,3 +1,0 @@
-```jsx
-<StarRatingForm onClick={() => {}}></StarRatingForm>
-```
