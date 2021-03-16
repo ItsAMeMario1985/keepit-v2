@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UploadButton renders correctly 1`] = `
+<form>
+  <label
+    class="UploadButton__StyledLabel-sc-1onsopv-1 cCvwXH"
+  >
+    <svg
+      height="50px"
+    >
+      keepit-button.svg
+    </svg>
+    <input
+      accept="image/x-png,image/gif,image/jpeg"
+      alt="image-input"
+      class="UploadButton__StyledInput-sc-1onsopv-0 fHFKj"
+      data-testid="uploadbutton"
+      multiple=""
+      name="image"
+      type="file"
+    />
+  </label>
+</form>
+`;

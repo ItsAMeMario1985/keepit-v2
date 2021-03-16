@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResetFilterButton renders correctly 1`] = `
+<button
+  class="ResetFilterButton__StyledResetFilterButton-sc-12zadcj-0 juJXRc"
+  data-testid="resetbutton"
+>
+   
+  <svg>
+    close.svg
+  </svg>
+</button>
+`;

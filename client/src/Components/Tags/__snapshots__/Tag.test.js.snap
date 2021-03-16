@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tag renders correctly 1`] = `
+<span
+  class="Tag__StyledTag-sc-1f6t5zy-0 flnIy"
+>
+  Test
+</span>
+`;
