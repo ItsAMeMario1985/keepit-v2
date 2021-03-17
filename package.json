@@ -27,7 +27,7 @@
     "server": "nodemon dist",
     "babel": "babel src -d dist",
     "babel:watch": "npm run babel -- -w",
-    "build": "npm install && cd client && npm run build"
+    "build": "cd client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
