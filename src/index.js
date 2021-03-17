@@ -26,11 +26,17 @@ app.use(express.json({ limit: '200mb' }))
 app.use(requestLogger())
 const path = require('path')
 
-app.use('/', express.static(path.join(__dirname, '../client/build')))
+//app.use('/', express.static(path.join(__dirname, '../client/build')))
 app.use('/api/media', express.static('src/public'))
 app.use('/api/user', userRoute)
 app.use('/api/keepit', keepitRoute)
 app.use('/api/image', imageRoute)
+
+app.use(express.static(path.join(__dirname, '../client/build')))
+// Handle React routing, return all requests to React app
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
+})
 
 app.listen(process.env.PORT || 5000, () => {
   console.log('Server (keepit-v2) is running on http://localhost:4000')
