@@ -1,4 +1,8 @@
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
+const apiBaseUrl = 'https://keepit182.herokuapp.com/api'
+
+if (process.env.NODE_ENV === 'DEVELOPMENT') {
+  apiBaseUrl = process.env.REACT_APP_API_BASE_URL
+}
 
 export function apiGetAllKeepits(token) {
   console.log(apiBaseUrl)
