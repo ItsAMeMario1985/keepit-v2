@@ -23,10 +23,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run babel && npm-run-all --parallel babel:watch server && (cd client && npm run build)",
+    "start": "npm run babel && npm-run-all --parallel babel:watch server",
     "server": "nodemon dist",
     "babel": "babel src -d dist",
-    "babel:watch": "npm run babel -- -w"
+    "babel:watch": "npm run babel -- -w",
+    "build": "cd client && npm run build"
   },
   "keywords": [],
   "author": "",
