@@ -1,15 +1,13 @@
 import vision from '@google-cloud/vision'
 
 export default async function loadApiVisionLabels(path) {
-  var replacedPrivateKey = process.env.g_private_key
-  replacedPrivateKey.replace('\\n', '\n')
   // Creates a client
   var client = new vision.ImageAnnotatorClient({
     credentials: {
       type: process.env.g_type,
       project_id: process.env.g_project_id,
       private_key_id: process.env.g_private_key_id,
-      private_key: replacedPrivateKey,
+      private_key: process.env.g_private_key,
       client_email: process.env.g_client_email,
       client_id: process.env.g_client_id,
       auth_uri: process.env.g_auth_uri,

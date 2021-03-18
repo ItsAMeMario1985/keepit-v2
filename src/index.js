@@ -17,23 +17,6 @@ mongoose
   .catch((error) => console.error('Could not connect to MongoDB', error))
 
 const app = express()
-var replacedPrivateKey = process.env.g_private_key
-replacedPrivateKey.replace('\\n', '\n')
-
-var testenv = {
-  type: process.env.g_type,
-  project_id: process.env.g_project_id,
-  private_key_id: process.env.g_private_key_id,
-  private_key: replacedPrivateKey,
-  client_email: process.env.g_client_email,
-  client_id: process.env.g_client_id,
-  auth_uri: process.env.g_auth_uri,
-  token_uri: process.env.g_token_uri,
-  auth_provider_x509_cert_url: process.env.g_auth_provider_x509_cert_url,
-  client_x509_cert_url: process.env.g_client_x509_cert_url,
-}
-
-console.log(testenv)
 
 app.use(cors())
 // app.get('/', (req, res) => {
