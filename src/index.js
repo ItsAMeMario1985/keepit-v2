@@ -17,9 +17,10 @@ mongoose
   .catch((error) => console.error('Could not connect to MongoDB', error))
 
 const app = express()
-var replacedPrivateKey = process.env.g_private_key.replace(/\\n/g, '\n'),
+var replacedPrivateKey = process.env.g_private_key
+replacedPrivateKey.replace(/\\n/g, '\n')
 
-const testenv = {
+var testenv = {
   type: process.env.g_type,
   project_id: process.env.g_project_id,
   private_key_id: process.env.g_private_key_id,
