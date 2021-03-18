@@ -32,7 +32,7 @@ export default function KeepitList({ keepits, className }) {
               key={keepit._id}
               src={
                 keepit.images.length > 0
-                  ? apiBaseUrl + keepit.images[0].path.replace('.', '_thumb.')
+                  ? keepit.images[0].path.replace('.webp', '_thumb.webp')
                   : ImageNotFoundImg
               }
               alt=""

@@ -56,7 +56,7 @@ const save = async (reqBody, userId) => {
     const images = reqBody.images
     images.forEach((image) => {
       let newImage = new Image({
-        path: '/media/images/' + image + '.webp',
+        path: 'https://keepitbucket.s3.amazonaws.com/img/' + image + '.webp',
         id: image,
         keepitId: keepit._id,
       })

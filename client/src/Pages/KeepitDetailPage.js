@@ -34,11 +34,9 @@ export default function KeepitDetailPage({ props }) {
   const keepit = history.location.state.keepit
   const tags = keepit.tags
 
-  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
-
   let imageUrl = ImageNotFoundImg
   if (keepit.images) {
-    imageUrl = apiBaseUrl + '/' + keepit.images[0].path
+    imageUrl = keepit.images[0].path
   }
 
   function handleDelete() {

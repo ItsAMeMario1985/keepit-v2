@@ -1,10 +1,12 @@
 import ImageService from '../services/image-service'
+import visionApiService from '../services/visionApi-service'
 import { v4 as uuidv4 } from 'uuid'
+import { async } from 'regenerator-runtime'
 
 module.exports = { getTags, upload }
 
 async function getTags(req, res) {
-  console.log('// Image Controller getTags')
+  //console.log('// Image Controller -> getTags')
   const imageIds = req.body.imageIds
   try {
     let response = await ImageService.getTags(imageIds)
@@ -15,18 +17,26 @@ async function getTags(req, res) {
 }
 
 async function upload(req, res) {
-  console.log('// Image Controller upload')
-  try {
-    let files = req.body.files
-    let responseIds = []
-    files.forEach((file) => {
-      let name = uuidv4()
-      responseIds.push(name)
-      ImageService.saveImage(file, name)
-      ImageService.saveThumbnail(name)
-    })
-    res.json({ ids: responseIds })
-  } catch (e) {
-    res.send({ message: 'Error in uploading' })
-  }
+  //console.log('// Image Controller -> upload')
+  let files = req.body.files
+  let responseIds = []
+
+  files.forEach(async (file) => {
+    let imageId = uuidv4()
+    responseIds.push(imageId)
+    const imagePath = await ImageService.saveImage(file, imageId)
+    ImageService.sendToS3(imagePath)
+    const thumbPath = await ImageService.saveThumbnail(imageId)
+    ImageService.sendToS3(thumbPath)
+  })
+
+  // TRY TO DELIVER
+  // let responseLabels = []
+  // responseIds.forEach(async (id) => {
+  //   //let thumbPath = './src/public/images/' + id + '_thumb.webp'
+  //   responseLabels.push(ImageService.getTagsA(id))
+  // })
+  // var allLabels = await Promise.all(responseLabels)
+
+  res.json({ ids: responseIds })
 }

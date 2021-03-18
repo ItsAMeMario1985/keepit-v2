@@ -40,5 +40,5 @@ app.get('*', function (req, res) {
 
 app.listen(process.env.PORT || 5000, () => {
   console.log('Server (keepit-v2) is running on http://localhost:4000')
-  deleteUnusedImg()
+  //deleteUnusedImg()
 })

@@ -2,6 +2,8 @@ import visionApiService from './visionApi-service'
 import fs from 'fs'
 import sharp from 'sharp'
 import Image from '../models/ImageModel'
+import AWS from 'aws-sdk'
+import path from 'path'
 
 const deleteUnused = async (file, name) => {
   console.log('// Cron to delete unused images')
@@ -38,10 +40,9 @@ const deleteUnused = async (file, name) => {
 }
 
 const getTags = async (imageIds) => {
-  console.log('// Image Service -> getTags')
+  console.log('// Image Service -> getTags', imageIds)
   try {
     let ids = imageIds
-
     // Receive labels of images
     const labelPromises = []
     ids.forEach((id) => {
@@ -50,7 +51,6 @@ const getTags = async (imageIds) => {
       )
     })
     var allLabels = await Promise.all(labelPromises)
-
     // Merge if multiple images were uploaded
     var mergedLabels
     if (allLabels.length > 1) {
@@ -58,13 +58,17 @@ const getTags = async (imageIds) => {
     } else {
       mergedLabels = [...allLabels[0]]
     }
-
     // Filter score > X
     var filteredLabels = mergedLabels.filter((label) => label.score > 0.8)
-
     // Create response
     var response = filteredLabels.map((filteredLabel) => {
       return filteredLabel.description
+    })
+
+    // Delete images
+    ids.forEach((id) => {
+      fs.unlinkSync('./src/public/images/' + id + '.webp')
+      fs.unlinkSync('./src/public/images/' + id + '_thumb.webp')
     })
 
     return { labels: response }
@@ -73,34 +77,92 @@ const getTags = async (imageIds) => {
   }
 }
 
-const saveImage = async (file, name) => {
-  console.log('// Image Service -> saveImage')
-  try {
-    var base64result = file.split(',')[1]
-    fs.writeFileSync(
-      './src/public/images/' + name + '.webp',
-      base64result,
-      'base64',
-      function (err) {
-        console.log(err)
+// Alternative way for labels
+const getTagsA = (imageIds) => {
+  return new Promise((resolve) => {
+    console.log('// Image Service -> getTags', imageIds)
+
+    visionApiService('./src/public/images/' + imageIds + '.webp').then(
+      (result) => {
+        var filteredLabels = result.filter((label) => label.score > 0.8)
+        // Create response
+        var response = filteredLabels.map((filteredLabel) => {
+          return filteredLabel.description
+        })
+        resolve(response)
       }
     )
-    return { message: 'ok' }
-  } catch (e) {
-    return { message: 'Error in saving image' + e }
+  })
+}
+
+const saveImage = async (file, name) => {
+  //console.log('// Image Service -> saveImage')
+  return new Promise((resolve) => {
+    try {
+      var base64result = file.split(',')[1]
+      fs.writeFileSync(
+        './src/public/images/' + name + '.webp',
+        base64result,
+        'base64',
+        function (err) {
+          console.log(err)
+        }
+      )
+      resolve('./src/public/images/' + name + '.webp')
+    } catch (e) {
+      resolve({ message: 'Error in saving image' + e })
+    }
+  })
+}
+
+const deleteImage = async (path) => {
+  console.log('// Image Service -> deleteImage', path)
+
+  try {
+    fs.unlinkSync(path)
+  } catch (err) {
+    console.error(err)
   }
 }
 
 const saveThumbnail = async (name) => {
-  console.log('// Image Service -> saveThumbnail')
+  //console.log('// Image Service -> saveThumbnail')
+  return await sharp('./src/public/images/' + name + '.webp')
+    .rotate()
+    .resize(300)
+    .toFile('./src/public/images/' + name + '_thumb.webp')
+    .then((data) => {
+      return './src/public/images/' + name + '_thumb.webp'
+    })
+    .catch((err) => {
+      return err
+    })
+}
+
+const sendToS3 = async (filePath, deleteFn) => {
+  //console.log('// Image Service -> SendToS3 -> ', filePath)
   try {
-    sharp('./src/public/images/' + name + '.webp')
-      .rotate()
-      .resize(300)
-      .toFile('./src/public/images/' + name + '_thumb.webp')
-    return { message: 'ok' }
+    AWS.config.update({
+      accessKeyId: process.env.accessKeyId,
+      secretAccessKey: process.env.secretAccessKey,
+    })
+    var s3 = new AWS.S3()
+    var params = {
+      Bucket: 'keepitbucket',
+      Body: fs.createReadStream(filePath),
+      Key: 'img/' + path.basename(filePath),
+      ACL: 'public-read',
+    }
+    s3.upload(params, function (err, data) {
+      if (err) {
+        console.log('Error', err)
+      }
+      if (data) {
+        console.log('// Image Service -> SendToS3 -> success ->', data.Location)
+      }
+    })
   } catch (e) {
-    return { message: 'Error in saving thumbnail' + e }
+    return { message: 'Error in saving image' + e }
   }
 }
 
@@ -109,4 +171,7 @@ module.exports = {
   saveImage,
   saveThumbnail,
   deleteUnused,
+  sendToS3,
+  deleteImage,
+  getTagsA,
 }
