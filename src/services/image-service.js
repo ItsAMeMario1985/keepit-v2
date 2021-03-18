@@ -66,10 +66,10 @@ const getTags = async (imageIds) => {
     })
 
     // Delete images
-    ids.forEach((id) => {
-      fs.unlinkSync('./src/public/images/' + id + '.webp')
-      fs.unlinkSync('./src/public/images/' + id + '_thumb.webp')
-    })
+    // ids.forEach((id) => {
+    //   fs.unlinkSync('./src/public/images/' + id + '.webp')
+    //   fs.unlinkSync('./src/public/images/' + id + '_thumb.webp')
+    // })
 
     return { labels: response }
   } catch (e) {
