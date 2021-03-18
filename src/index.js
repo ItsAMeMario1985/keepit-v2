@@ -18,7 +18,7 @@ mongoose
 
 const app = express()
 var replacedPrivateKey = process.env.g_private_key
-replacedPrivateKey.replace(/\\n/g, '\n')
+replacedPrivateKey.replace('\\n', '\n')
 
 var testenv = {
   type: process.env.g_type,
