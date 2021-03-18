@@ -25,8 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # upload folder
-/src/public/images/*
-!/src/public/images/
+/src/public/images/*.webp
+
 
 # dist
 dist
