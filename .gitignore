@@ -26,6 +26,7 @@ yarn-error.log*
 
 # upload folder
 /src/public/images/*
+!/src/public/images/
 
 # dist
 dist
