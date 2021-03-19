@@ -2,47 +2,12 @@ import visionApiService from './visionApi-service'
 import fs from 'fs'
 import sharp from 'sharp'
 import Image from '../models/ImageModel'
-import Keepit from '../models/KeepitModel'
 
 const getImgPath = async (id) => {
   console.log('// Image Service -> getImgPath', id)
   let images = await Image.find({ keepitId: id })
   let response = images.map((image) => image.path)
   return response
-}
-
-const deleteUnused = async (file, name) => {
-  console.log('// Cron to delete unused images')
-  try {
-    // Get all
-    const imagesInUse = await Image.find({})
-    const allImages = fs.readdirSync('./src/public/images/')
-
-    console.log('1 - Images in use: ', imagesInUse.length * 2)
-    console.log('1 - Images in folder:', allImages.length)
-
-    // splice images "in use" from arr
-    imagesInUse.forEach((imageInUse) => {
-      let index = allImages.indexOf(imageInUse.id + '.webp')
-      allImages.splice(index, 1)
-      let indexThumb = allImages.indexOf(imageInUse.id + '_thumb.webp')
-      allImages.splice(indexThumb, 1)
-    })
-
-    // Delete remaining images
-    allImages.forEach((imageToDelete) => {
-      try {
-        fs.unlinkSync('./src/public/images/' + imageToDelete)
-      } catch (err) {
-        console.error(err)
-      }
-    })
-
-    console.log('2 - Images in use: ', imagesInUse.length * 2)
-    console.log('2 - Images to delete:', allImages.length)
-  } catch (e) {
-    return { message: 'Error in deleting image' + e }
-  }
 }
 
 const getTags = async (imageIds) => {
@@ -103,18 +68,24 @@ const getTagsA = (imageIds) => {
 
 const saveImage = async (file, name) => {
   //console.log('// Image Service -> saveImage')
+  let prePath = './src/public/images/' + name + '_pre.webp'
+  let path = './src/public/images/' + name + '.webp'
   return new Promise((resolve) => {
     try {
       var base64result = file.split(',')[1]
-      fs.writeFileSync(
-        './src/public/images/' + name + '.webp',
-        base64result,
-        'base64',
-        function (err) {
-          console.log(err)
-        }
-      )
-      resolve('./src/public/images/' + name + '.webp')
+      fs.writeFileSync(prePath, base64result, 'base64', function (err) {
+        console.log('error in write', err)
+      })
+      sharp(prePath)
+        .rotate()
+        .resize(1100)
+        .toFile('./src/public/images/' + name + '.webp')
+        .then((data) => {
+          console.log('// Minimize img quality...')
+          resolve(path)
+        })
+
+      //resolve('./src/public/images/' + name + '.webp')
     } catch (e) {
       resolve({ message: 'Error in saving image' + e })
     }
@@ -142,6 +113,40 @@ const saveThumbnail = async (name) => {
     .catch((err) => {
       return err
     })
+}
+
+const deleteUnused = async (file, name) => {
+  console.log('// Cron to delete unused images')
+  try {
+    // Get all
+    const imagesInUse = await Image.find({})
+    const allImages = fs.readdirSync('./src/public/images/')
+
+    console.log('1 - Images in use: ', imagesInUse.length * 2)
+    console.log('1 - Images in folder:', allImages.length)
+
+    // splice images "in use" from arr
+    imagesInUse.forEach((imageInUse) => {
+      let index = allImages.indexOf(imageInUse.id + '.webp')
+      allImages.splice(index, 1)
+      let indexThumb = allImages.indexOf(imageInUse.id + '_thumb.webp')
+      allImages.splice(indexThumb, 1)
+    })
+
+    // Delete remaining images
+    allImages.forEach((imageToDelete) => {
+      try {
+        fs.unlinkSync('./src/public/images/' + imageToDelete)
+      } catch (err) {
+        console.error(err)
+      }
+    })
+
+    console.log('2 - Images in use: ', imagesInUse.length * 2)
+    console.log('2 - Images to delete:', allImages.length)
+  } catch (e) {
+    return { message: 'Error in deleting image' + e }
+  }
 }
 
 module.exports = {
