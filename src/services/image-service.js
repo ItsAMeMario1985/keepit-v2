@@ -73,24 +73,63 @@ const saveImage = async (file, name) => {
   return new Promise((resolve) => {
     try {
       var base64result = file.split(',')[1]
+      // Save orig image
       fs.writeFileSync(prePath, base64result, 'base64', function (err) {
         console.log('error in write', err)
       })
+      // Optimize orig image
       sharp(prePath)
         .rotate()
         .resize(1100)
         .toFile('./src/public/images/' + name + '.webp')
-        .then((data) => {
-          console.log('// Minimize img quality...')
-          resolve(path)
+        .then(() => {
+          // Save Thumbnail
+          sharp(path)
+            .rotate()
+            .resize(300)
+            .toFile('./src/public/images/' + name + '_thumb.webp')
+            .then(() => {
+              console.log('// BE Uploading done...')
+              resolve(path)
+            })
         })
-
-      //resolve('./src/public/images/' + name + '.webp')
     } catch (e) {
       resolve({ message: 'Error in saving image' + e })
     }
   })
 }
+
+const saveThumbnail = async (name) => {
+  let path = './src/public/images/' + name + '.webp'
+  return new Promise((resolve) => {
+    try {
+      sharp(path)
+        .rotate()
+        .resize(300)
+        .toFile('./src/public/images/' + name + '_thumb.webp')
+        .then((data) => {
+          console.log('// Minimize img quality...')
+          resolve('./src/public/images/' + name + '_thumb.webp')
+        })
+    } catch (e) {
+      resolve({ message: 'Error in saving thumb image' + e })
+    }
+  })
+}
+
+// const saveThumbnail = async (name) => {
+//   //console.log('// Image Service -> saveThumbnail')
+//   return await sharp('./src/public/images/' + name + '.webp')
+//     .rotate()
+//     .resize(300)
+//     .toFile('./src/public/images/' + name + '_thumb.webp')
+//     .then((data) => {
+//       return './src/public/images/' + name + '_thumb.webp'
+//     })
+//     .catch((err) => {
+//       return err
+//     })
+// }
 
 const deleteImage = async (path) => {
   console.log('// Image Service -> deleteImage', path)
@@ -99,20 +138,6 @@ const deleteImage = async (path) => {
   } catch (err) {
     console.error(err)
   }
-}
-
-const saveThumbnail = async (name) => {
-  //console.log('// Image Service -> saveThumbnail')
-  return await sharp('./src/public/images/' + name + '.webp')
-    .rotate()
-    .resize(300)
-    .toFile('./src/public/images/' + name + '_thumb.webp')
-    .then((data) => {
-      return './src/public/images/' + name + '_thumb.webp'
-    })
-    .catch((err) => {
-      return err
-    })
 }
 
 const deleteUnused = async (file, name) => {
