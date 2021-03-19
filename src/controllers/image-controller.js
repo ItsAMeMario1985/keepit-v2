@@ -25,14 +25,14 @@ async function upload(req, res) {
     let imageId = uuidv4()
     responseIds.push(imageId)
     promises.push(ImageService.saveImage(file, imageId))
-    //AwsS3Service.upload(imagePath)
-    promises.push(ImageService.saveThumbnail(imageId))
-    //AwsS3Service.upload(thumbPath)
   })
 
-  Promise.all(promises).then((result) => {
-    console.log('/// result -> ', result)
+  Promise.all(promises).then((imagePaths) => {
+    imagePaths.forEach((imagePath) => {
+      AwsS3Service.upload(imagePath)
+      AwsS3Service.upload(imagePath.replace('.webp', '_thumb.webp'))
+    })
     res.json({ ids: responseIds })
-    console.log('Done....')
+    console.log('// S3 Uploading done...')
   })
 }
