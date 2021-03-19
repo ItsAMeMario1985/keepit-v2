@@ -27,22 +27,23 @@ import useOverlay from '../Hooks/useOverlay'
 import useKeepit from '../Hooks/useKeepit'
 import useGeolocation from '../Hooks/useGeolocation'
 import { apiUploadImages } from '../Services/apiRequests'
+import resizeImage from '../Services/resizeImage'
 
 export default function NewKeepitPage() {
   const history = useHistory()
+
   const [images, setImages] = useState([])
   const [rated, setRated] = useState([])
   const [imageIds, setImageIds] = useState([])
   const [ready4upload, setReady4upload] = useState(false)
-  const { token, setToken } = useToken()
 
+  const { token } = useToken()
   const {
     overlayStatus,
     setOverlayStatus,
     overlayContent,
     setOverlayContent,
   } = useOverlay()
-
   const {
     tags,
     setTags,
@@ -51,7 +52,6 @@ export default function NewKeepitPage() {
     toggleTagAdded,
     loadApiTags,
   } = useTags()
-
   const { geolocation, getBrowserLocation } = useGeolocation()
   const { saveKeepit } = useKeepit()
 
@@ -141,8 +141,12 @@ export default function NewKeepitPage() {
 
   async function loadHistoryImages() {
     const newImagesPromises = []
-    Array.from(history.location.state.images).forEach((file) => {
-      newImagesPromises.push(setBase64(file))
+    Array.from(history.location.state.images).forEach(async (file) => {
+      try {
+        newImagesPromises.push(resizeImage(file))
+      } catch (err) {
+        console.log(err)
+      }
     })
     setImages(await Promise.all(newImagesPromises))
   }
@@ -182,8 +186,9 @@ export default function NewKeepitPage() {
     }
   }
 
-  function uploadImages(images) {
+  async function uploadImages(images) {
     console.log('UPLOAD FIRST TIME')
+
     const files = images
     const labelRequest = {
       files,
