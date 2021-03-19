@@ -15,7 +15,6 @@ async function getAll(req, res) {
 }
 
 async function save(req, res) {
-  console.log('save controller')
   const userId = req.user.id
   try {
     let response = await KeepitService.save(req.body, userId)
@@ -27,7 +26,6 @@ async function save(req, res) {
 
 async function deleteOne(req, res) {
   const { id } = req.params
-  console.log('//////////// ID: ' + id)
   try {
     let imagePaths = await ImageService.getImgPath(id)
     console.log(imagePaths)
