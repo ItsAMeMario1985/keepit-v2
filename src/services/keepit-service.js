@@ -54,9 +54,15 @@ const save = async (reqBody, userId) => {
 
     // Images
     const images = reqBody.images
+    if (process.env.NODE_ENV === 'DEVELOPMENT') {
+      var folder = 'imgLokal/'
+    } else {
+      var folder = 'img/'
+    }
     images.forEach((image) => {
       let newImage = new Image({
-        path: 'https://keepitbucket.s3.amazonaws.com/img/' + image + '.webp',
+        path:
+          'https://keepitbucket.s3.amazonaws.com/' + folder + image + '.webp',
         id: image,
         keepitId: keepit._id,
       })

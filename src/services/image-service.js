@@ -2,8 +2,14 @@ import visionApiService from './visionApi-service'
 import fs from 'fs'
 import sharp from 'sharp'
 import Image from '../models/ImageModel'
-import AWS from 'aws-sdk'
-import path from 'path'
+import Keepit from '../models/KeepitModel'
+
+const getImgPath = async (id) => {
+  console.log('// Image Service -> getImgPath', id)
+  let images = await Image.find({ keepitId: id })
+  let response = images.map((image) => image.path)
+  return response
+}
 
 const deleteUnused = async (file, name) => {
   console.log('// Cron to delete unused images')
@@ -117,7 +123,6 @@ const saveImage = async (file, name) => {
 
 const deleteImage = async (path) => {
   console.log('// Image Service -> deleteImage', path)
-
   try {
     fs.unlinkSync(path)
   } catch (err) {
@@ -139,39 +144,12 @@ const saveThumbnail = async (name) => {
     })
 }
 
-const sendToS3 = async (filePath, deleteFn) => {
-  //console.log('// Image Service -> SendToS3 -> ', filePath)
-  try {
-    AWS.config.update({
-      accessKeyId: process.env.accessKeyId,
-      secretAccessKey: process.env.secretAccessKey,
-    })
-    var s3 = new AWS.S3()
-    var params = {
-      Bucket: 'keepitbucket',
-      Body: fs.createReadStream(filePath),
-      Key: 'img/' + path.basename(filePath),
-      ACL: 'public-read',
-    }
-    s3.upload(params, function (err, data) {
-      if (err) {
-        console.log('Error', err)
-      }
-      if (data) {
-        console.log('// Image Service -> SendToS3 -> success ->', data.Location)
-      }
-    })
-  } catch (e) {
-    return { message: 'Error in saving image' + e }
-  }
-}
-
 module.exports = {
   getTags,
   saveImage,
   saveThumbnail,
   deleteUnused,
-  sendToS3,
   deleteImage,
   getTagsA,
+  getImgPath,
 }

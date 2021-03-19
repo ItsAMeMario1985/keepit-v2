@@ -1,4 +1,5 @@
 import ImageService from '../services/image-service'
+import awsS3Service from '../services/aws-s3-service'
 import visionApiService from '../services/visionApi-service'
 import { v4 as uuidv4 } from 'uuid'
 import { async } from 'regenerator-runtime'
@@ -25,9 +26,9 @@ async function upload(req, res) {
     let imageId = uuidv4()
     responseIds.push(imageId)
     const imagePath = await ImageService.saveImage(file, imageId)
-    ImageService.sendToS3(imagePath)
+    awsS3Service.upload(imagePath)
     const thumbPath = await ImageService.saveThumbnail(imageId)
-    ImageService.sendToS3(thumbPath)
+    awsS3Service.upload(thumbPath)
   })
 
   // TRY TO DELIVER
