@@ -26,7 +26,7 @@ const upload = async (filePath) => {
         console.log('Error', err)
       }
       if (data) {
-        console.log('// Image Service -> SendToS3 -> success ->', data.Location)
+        //console.log('// Image Service -> SendToS3 -> success ->', data.Location)
       }
     })
   } catch (e) {
@@ -40,7 +40,6 @@ const deleteImg = async (filePath) => {
   } else {
     var folder = 'img/'
   }
-  console.log('S3 -> Try to delete ', filePath)
   try {
     AWS.config.update({
       accessKeyId: process.env.accessKeyId,

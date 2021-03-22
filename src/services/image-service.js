@@ -4,55 +4,40 @@ import sharp from 'sharp'
 import Image from '../models/ImageModel'
 
 const getImgPath = async (id) => {
-  console.log('// Image Service -> getImgPath', id)
   let images = await Image.find({ keepitId: id })
   let response = images.map((image) => image.path)
   return response
 }
 
 const getTags = async (imageIds) => {
-  console.log('// Image Service -> getTags', imageIds)
-  try {
-    let ids = imageIds
-    // Receive labels of images
-    const labelPromises = []
-    ids.forEach((id) => {
-      labelPromises.push(
-        visionApiService('./src/public/images/' + id + '.webp')
-      )
-    })
-    var allLabels = await Promise.all(labelPromises)
-    // Merge if multiple images were uploaded
-    var mergedLabels
-    if (allLabels.length > 1) {
-      mergedLabels = [...allLabels[0], ...allLabels[1]]
-    } else {
-      mergedLabels = [...allLabels[0]]
-    }
-    // Filter score > X
-    var filteredLabels = mergedLabels.filter((label) => label.score > 0.8)
-    // Create response
-    var response = filteredLabels.map((filteredLabel) => {
-      return filteredLabel.description
-    })
+  // try {
+  let ids = imageIds
+  // Receive labels of images
+  const labelPromises = []
+  ids.forEach((id) => {
+    labelPromises.push(visionApiService('./src/public/images/' + id + '.webp'))
+  })
+  var allLabels = await Promise.all(labelPromises)
 
-    // Delete images
-    // ids.forEach((id) => {
-    //   fs.unlinkSync('./src/public/images/' + id + '.webp')
-    //   fs.unlinkSync('./src/public/images/' + id + '_thumb.webp')
-    // })
-
-    return { labels: response }
-  } catch (e) {
-    return { message: 'Error in loading tags' + e }
+  // Merge if multiple images were uploaded
+  var mergedLabels
+  if (allLabels.length > 1) {
+    mergedLabels = [...allLabels[0], ...allLabels[1]]
+  } else {
+    mergedLabels = [...allLabels[0]]
   }
+  // Filter score > X
+  var filteredLabels = mergedLabels.filter((label) => label.score > 0.8)
+  // Create response
+  var response = filteredLabels.map((filteredLabel) => {
+    return filteredLabel.description
+  })
+  return Promise.resolve({ labels: response })
 }
 
 // Alternative way for labels
 const getTagsA = (imageIds) => {
   return new Promise((resolve) => {
-    console.log('// Image Service -> getTags', imageIds)
-
     visionApiService('./src/public/images/' + imageIds + '.webp').then(
       (result) => {
         var filteredLabels = result.filter((label) => label.score > 0.8)
@@ -67,7 +52,6 @@ const getTagsA = (imageIds) => {
 }
 
 const saveImage = async (file, name) => {
-  //console.log('// Image Service -> saveImage')
   let prePath = './src/public/images/' + name + '_pre.webp'
   let path = './src/public/images/' + name + '.webp'
   return new Promise((resolve) => {
@@ -89,7 +73,7 @@ const saveImage = async (file, name) => {
             .resize(300)
             .toFile('./src/public/images/' + name + '_thumb.webp')
             .then(() => {
-              console.log('// BE Uploading done...')
+              //console.log('// BE Uploading done...')
               resolve(path)
             })
         })
@@ -107,8 +91,7 @@ const saveThumbnail = async (name) => {
         .rotate()
         .resize(300)
         .toFile('./src/public/images/' + name + '_thumb.webp')
-        .then((data) => {
-          console.log('// Minimize img quality...')
+        .then(() => {
           resolve('./src/public/images/' + name + '_thumb.webp')
         })
     } catch (e) {
@@ -117,22 +100,7 @@ const saveThumbnail = async (name) => {
   })
 }
 
-// const saveThumbnail = async (name) => {
-//   //console.log('// Image Service -> saveThumbnail')
-//   return await sharp('./src/public/images/' + name + '.webp')
-//     .rotate()
-//     .resize(300)
-//     .toFile('./src/public/images/' + name + '_thumb.webp')
-//     .then((data) => {
-//       return './src/public/images/' + name + '_thumb.webp'
-//     })
-//     .catch((err) => {
-//       return err
-//     })
-// }
-
 const deleteImage = async (path) => {
-  console.log('// Image Service -> deleteImage', path)
   try {
     fs.unlinkSync(path)
   } catch (err) {
@@ -141,7 +109,6 @@ const deleteImage = async (path) => {
 }
 
 const deleteUnused = async (file, name) => {
-  console.log('// Cron to delete unused images')
   try {
     // Get all
     const imagesInUse = await Image.find({})

@@ -3,8 +3,6 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 const login = async (email, password) => {
-  console.log('// Login Service')
-
   try {
     const user = await User.findOne({
       email,
@@ -47,8 +45,6 @@ const login = async (email, password) => {
 }
 
 const signup = async (email, password) => {
-  console.log('// Signup Service')
-
   try {
     let user = await User.findOne({
       email,

@@ -28,7 +28,6 @@ async function deleteOne(req, res) {
   const { id } = req.params
   try {
     let imagePaths = await ImageService.getImgPath(id)
-    console.log(imagePaths)
     imagePaths.forEach((imagePath) => {
       awsS3Service.deleteImg(imagePath)
       awsS3Service.deleteImg(imagePath.replace('.webp', '_thumb.webp'))

@@ -187,8 +187,6 @@ export default function NewKeepitPage() {
   }
 
   async function uploadImages(images) {
-    console.log('UPLOAD FIRST TIME')
-
     const files = images
     const labelRequest = {
       files,

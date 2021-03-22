@@ -5,7 +5,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export function apiGetAllKeepits(token) {
-  console.log(apiBaseUrl)
   return requestApi({
     url: `${apiBaseUrl}/keepit/getall`,
     method: 'GET',
@@ -14,7 +13,6 @@ export function apiGetAllKeepits(token) {
 }
 
 export function apiGetVisionLabels(token, body) {
-  console.log('apiGetVisionLabels')
   return requestApi({
     url: `${apiBaseUrl}/image/gettags`,
     method: 'POST',
@@ -42,7 +40,6 @@ export function apiSaveKeepit(token, body) {
 }
 
 export function apiDeleteKeepit(token, id) {
-  console.log('in apiDeleteKeepit', id)
   return requestApi({
     url: `${apiBaseUrl}/keepit/delete/` + id,
     method: 'DELETE',
@@ -51,10 +48,10 @@ export function apiDeleteKeepit(token, id) {
 }
 
 export function requestApi(props) {
-  console.log('Api Request - url', props.url)
-  console.log('Api Request - body', props.body)
-  console.log('Api Request - method', props.method)
-  console.log('Api Request - token', props.token)
+  // console.log('Api Request - url', props.url)
+  // console.log('Api Request - body', props.body)
+  // console.log('Api Request - method', props.method)
+  // console.log('Api Request - token', props.token)
 
   const myHeaders = new Headers()
   myHeaders.append('Content-Type', 'application/json')

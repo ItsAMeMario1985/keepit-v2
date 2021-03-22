@@ -5,7 +5,6 @@ import Tag from '../models/TagModel'
 import geoCodingService from './geocoding-service'
 
 const getAll = (userId) => {
-  console.log('// GetAll Service')
   return new Promise((resolve) => {
     try {
       Keepit.find({ userId: userId })
@@ -25,8 +24,6 @@ const getAll = (userId) => {
 }
 
 const save = async (reqBody, userId) => {
-  console.log('// Save Service')
-
   try {
     const user = await User.findById(userId)
 
@@ -49,7 +46,6 @@ const save = async (reqBody, userId) => {
       })
       keepit.tags.push(newTag)
       newTag.save()
-      console.log('// Keeepit - Save - Tags - Check')
     })
 
     // Images
@@ -68,8 +64,13 @@ const save = async (reqBody, userId) => {
       })
       keepit.images.push(newImage)
       newImage.save()
-      console.log('// Keeepit - Save - Images - Check')
     })
+
+    // Delete images
+    // ids.forEach((id) => {
+    //   fs.unlinkSync('./src/public/images/' + id + '.webp')
+    //   fs.unlinkSync('./src/public/images/' + id + '_thumb.webp')
+    // })
 
     // Geolocation
     if (reqBody.geolocation.length > 1) {
@@ -92,21 +93,20 @@ const save = async (reqBody, userId) => {
 }
 
 const deleteOne = (id) => {
-  console.log('// Delete Service: ' + id)
   try {
     Image.deleteMany({ keepitId: id }, function (err) {
       if (err) console.log(err)
-      console.log('Images deleted')
+      //console.log('Images deleted')
     })
 
     Tag.deleteMany({ keepitId: id }, function (err) {
       if (err) console.log(err)
-      console.log('Tags deleted')
+      //console.log('Tags deleted')
     })
 
     Keepit.deleteOne({ _id: id }, function (err) {
       if (err) console.log(err)
-      console.log('Keepit deleted')
+      //console.log('Keepit deleted')
     })
 
     return { message: 'Deletion complete ' }

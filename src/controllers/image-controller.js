@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid'
 module.exports = { getTags, upload }
 
 async function getTags(req, res) {
-  console.log('// Image Controller -> getTags')
   const imageIds = req.body.imageIds
   try {
     let response = await ImageService.getTags(imageIds)
@@ -15,8 +14,7 @@ async function getTags(req, res) {
   }
 }
 
-async function upload(req, res) {
-  //console.log('// Image Controller -> upload')
+function upload(req, res) {
   let files = req.body.files
   let responseIds = []
 
@@ -27,12 +25,17 @@ async function upload(req, res) {
     promises.push(ImageService.saveImage(file, imageId))
   })
 
-  Promise.all(promises).then((imagePaths) => {
-    imagePaths.forEach((imagePath) => {
-      AwsS3Service.upload(imagePath)
-      AwsS3Service.upload(imagePath.replace('.webp', '_thumb.webp'))
-    })
-    res.json({ ids: responseIds })
-    console.log('// S3 Uploading done...')
-  })
+  Promise.all(promises).then(
+    (imagePaths) => {
+      imagePaths.forEach((imagePath) => {
+        AwsS3Service.upload(imagePath)
+        AwsS3Service.upload(imagePath.replace('.webp', '_thumb.webp'))
+      })
+      res.json({ ids: responseIds })
+      console.log('// S3 Uploading done...')
+    },
+    function (err) {
+      // an error occurred, process the error here
+    }
+  )
 }
