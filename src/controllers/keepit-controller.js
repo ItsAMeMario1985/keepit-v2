@@ -4,37 +4,33 @@ import ImageService from '../services/image-service'
 
 module.exports = { getAll, save, deleteOne }
 
-async function getAll(req, res) {
+function getAll(req, res) {
   const userId = req.user.id
-  try {
-    let response = await KeepitService.getAll(userId)
-    res.json(response)
-  } catch (err) {
-    res.status(500).send(err)
-  }
+  KeepitService.getAll(userId)
+    .then((response) => res.json(response))
+    .catch((error) => res.status(500).send(error + ''))
 }
 
-async function save(req, res) {
+function save(req, res) {
   const userId = req.user.id
-  try {
-    let response = await KeepitService.save(req.body, userId)
-    res.json(response)
-  } catch (err) {
-    res.status(500).send(err)
-  }
+  KeepitService.save(req.body, userId)
+    .then((response) => res.json(response))
+    .catch((error) => res.status(500).send(error + ''))
 }
 
-async function deleteOne(req, res) {
+function deleteOne(req, res) {
   const { id } = req.params
-  try {
-    let imagePaths = await ImageService.getImgPath(id)
-    imagePaths.forEach((imagePath) => {
-      awsS3Service.deleteImg(imagePath)
-      awsS3Service.deleteImg(imagePath.replace('.webp', '_thumb.webp'))
+  ImageService.getImgPath(id)
+    .then((response) => {
+      let imagesPath = response
+      console.log('Got image path', imagesPath)
+      imagesPath.forEach((imagePath) => {
+        awsS3Service.deleteImg(imagePath)
+        awsS3Service.deleteImg(imagePath.replace('.webp', '_thumb.webp'))
+      })
     })
-    let response = await KeepitService.deleteOne(id)
-    res.json(response)
-  } catch (err) {
-    res.status(500).send(err)
-  }
+    .then(() => {
+      res.json(KeepitService.deleteOne(id))
+    })
+    .catch((error) => res.status(500).send(error + ''))
 }

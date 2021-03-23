@@ -7,16 +7,18 @@ const login = async (email, password) => {
     const user = await User.findOne({
       email,
     })
-    if (!user)
+    if (!user) {
       return {
-        message: 'User Not Exist',
+        message: 'User not exist',
       }
+    }
 
     const isMatch = await bcrypt.compare(password, user.password)
-    if (!isMatch)
+    if (!isMatch) {
       return {
-        message: 'Incorrect Password !',
+        message: 'Incorrect Password',
       }
+    }
 
     const payload = {
       user: {
@@ -30,8 +32,8 @@ const login = async (email, password) => {
         {
           expiresIn: '180d',
         },
-        (err, token) => {
-          if (err) throw err
+        (error, token) => {
+          if (error) return reject(error)
           resolve({ token: token })
         }
       )
@@ -51,7 +53,7 @@ const signup = async (email, password) => {
     })
     if (user) {
       return res.status(400).json({
-        msg: 'User Already Exists',
+        message: 'User Already Exists',
       })
     }
 
@@ -78,15 +80,15 @@ const signup = async (email, password) => {
         {
           expiresIn: '180d',
         },
-        (err, token) => {
-          if (err) throw err
+        (error, token) => {
+          if (error) return reject(error)
           resolve({ token: token })
         }
       )
     })
-  } catch (err) {
-    console.log(err.message)
-    res.status(500).send('Error in Saving')
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).send('Error in saving user')
   }
 }
 

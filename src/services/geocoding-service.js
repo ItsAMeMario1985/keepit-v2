@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 
-export default function geoCoding(latitude, longitude) {
-  return new Promise((resonse) => {
+const getCityCountry = (latitude, longitude) => {
+  return new Promise((resolve) => {
     const url =
       'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
       latitude +
@@ -24,7 +24,11 @@ export default function geoCoding(latitude, longitude) {
             country = fsd.address_components[0].long_name
           }
         })
-        resonse({ city: city, country: country })
+        resolve({ city: city, country: country })
       })
   })
+}
+
+module.exports = {
+  getCityCountry,
 }

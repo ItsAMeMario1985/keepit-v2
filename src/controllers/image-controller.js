@@ -4,38 +4,33 @@ import { v4 as uuidv4 } from 'uuid'
 
 module.exports = { getTags, upload }
 
-async function getTags(req, res) {
+function getTags(req, res) {
   const imageIds = req.body.imageIds
-  try {
-    let response = await ImageService.getTags(imageIds)
-    res.json(response)
-  } catch (err) {
-    res.status(500).send(err)
-  }
+  ImageService.getTags(imageIds)
+    .then((response) => {
+      res.json(response)
+    })
+    .catch((error) => res.status(500).send(error + ''))
 }
 
 function upload(req, res) {
+  const userId = req.user.id
+  console.log('userId', userId)
   let files = req.body.files
   let responseIds = []
-
-  let promises = []
+  let savingPromises = []
   files.forEach((file) => {
     let imageId = uuidv4()
     responseIds.push(imageId)
-    promises.push(ImageService.saveImage(file, imageId))
+    savingPromises.push(ImageService.saveImage(file, imageId))
   })
-
-  Promise.all(promises).then(
-    (imagePaths) => {
+  Promise.all(savingPromises)
+    .then((imagePaths) => {
       imagePaths.forEach((imagePath) => {
-        AwsS3Service.upload(imagePath)
-        AwsS3Service.upload(imagePath.replace('.webp', '_thumb.webp'))
+        AwsS3Service.upload(imagePath, userId)
+        AwsS3Service.upload(imagePath.replace('.webp', '_thumb.webp'), userId)
       })
       res.json({ ids: responseIds })
-      console.log('// S3 Uploading done...')
-    },
-    function (err) {
-      // an error occurred, process the error here
-    }
-  )
+    })
+    .catch((error) => res.status(500).send(error + ''))
 }

@@ -6,113 +6,104 @@ import geoCodingService from './geocoding-service'
 
 const getAll = (userId) => {
   return new Promise((resolve) => {
-    try {
-      Keepit.find({ userId: userId })
-        .populate('images tags')
-        .exec(function (err, keepitArr) {
-          if (err) return handleError(err)
-          var response = []
-          keepitArr.forEach((kt) => {
-            response.push(kt)
-          })
-          resolve(response)
+    Keepit.find({ userId: userId })
+      .populate('images tags')
+      .exec(function (error, keepitArr) {
+        if (error) return reject(error)
+        var response = []
+        keepitArr.forEach((kt) => {
+          response.push(kt)
         })
-    } catch (e) {
-      resolve({ message: 'Error: ' + e })
-    }
+        resolve(response)
+      })
   })
 }
 
 const save = async (reqBody, userId) => {
-  try {
-    const user = await User.findById(userId)
+  const user = await User.findById(userId)
 
-    // New Keepit
-    const keepit = new Keepit({
-      submitted: reqBody.submitted,
-      rating: reqBody.rating,
-      userId: user._id,
+  // New Keepit
+  const keepit = new Keepit({
+    submitted: reqBody.submitted,
+    rating: reqBody.rating,
+    userId: user._id,
+  })
+
+  //Tags
+  const tags = reqBody.tags
+    ? reqBody.tags
+    : [{ value: 'Untagged', isCustom: true }]
+  tags.forEach((tag) => {
+    let newTag = new Tag({
+      value: tag.value,
+      isCustom: tag.isCustom,
+      keepitId: keepit._id,
     })
+    keepit.tags.push(newTag)
+    newTag.save()
+  })
 
-    //Tags
-    const tags = reqBody.tags
-      ? reqBody.tags
-      : [{ value: 'Untagged', isCustom: true }]
-    tags.forEach((tag) => {
-      let newTag = new Tag({
-        value: tag.value,
-        isCustom: tag.isCustom,
-        keepitId: keepit._id,
-      })
-      keepit.tags.push(newTag)
-      newTag.save()
+  // Images
+  const imageIds = reqBody.images
+  let folder = process.env.amazons3foler
+
+  imageIds.forEach((imageId) => {
+    let newImage = new Image({
+      path:
+        'https://keepitbucket.s3.amazonaws.com/' +
+        folder +
+        '/' +
+        userId +
+        '_' +
+        imageId +
+        '.webp',
+      id: imageId,
+      keepitId: keepit._id,
     })
+    keepit.images.push(newImage)
+    newImage.save()
+  })
 
-    // Images
-    const images = reqBody.images
-    if (process.env.NODE_ENV === 'DEVELOPMENT') {
-      var folder = 'imgLokal/'
-    } else {
-      var folder = 'img/'
-    }
-    images.forEach((image) => {
-      let newImage = new Image({
-        path:
-          'https://keepitbucket.s3.amazonaws.com/' + folder + image + '.webp',
-        id: image,
-        keepitId: keepit._id,
-      })
-      keepit.images.push(newImage)
-      newImage.save()
-    })
+  // Delete images
+  // ids.forEach((id) => {
+  //   fs.unlinkSync('./src/public/images/' + id + '.webp')
+  //   fs.unlinkSync('./src/public/images/' + id + '_thumb.webp')
+  // })
 
-    // Delete images
-    // ids.forEach((id) => {
-    //   fs.unlinkSync('./src/public/images/' + id + '.webp')
-    //   fs.unlinkSync('./src/public/images/' + id + '_thumb.webp')
-    // })
-
-    // Geolocation
-    if (reqBody.geolocation.length > 1) {
-      const latitude = reqBody.geolocation[0]
-      const longitude = reqBody.geolocation[1]
-      var geoData = await geoCodingService(latitude, longitude)
-      keepit.city = geoData.city
-      keepit.country = geoData.country
-      keepit.latitude = latitude
-      keepit.longitude = longitude
-    }
-
-    user.keepits.push(keepit)
-    keepit.save()
-    user.save()
-    return { message: 'Saved' }
-  } catch (e) {
-    return { message: 'Error: ' + e }
+  // Geolocation
+  if (reqBody.geolocation.length > 1) {
+    const latitude = reqBody.geolocation[0]
+    const longitude = reqBody.geolocation[1]
+    var geoData = await geoCodingService.getCityCountry(latitude, longitude)
+    keepit.city = geoData.city
+    keepit.country = geoData.country
+    keepit.latitude = latitude
+    keepit.longitude = longitude
   }
+
+  user.keepits.push(keepit)
+  keepit.save()
+  user.save()
+  return { message: 'Saved' }
 }
 
 const deleteOne = (id) => {
-  try {
-    Image.deleteMany({ keepitId: id }, function (err) {
-      if (err) console.log(err)
-      //console.log('Images deleted')
-    })
+  Image.deleteMany({ keepitId: id }, function (err) {
+    if (err) console.log(err)
+    //console.log('Images deleted')
+  })
 
-    Tag.deleteMany({ keepitId: id }, function (err) {
-      if (err) console.log(err)
-      //console.log('Tags deleted')
-    })
+  Tag.deleteMany({ keepitId: id }, function (err) {
+    if (err) console.log(err)
+    //console.log('Tags deleted')
+  })
 
-    Keepit.deleteOne({ _id: id }, function (err) {
-      if (err) console.log(err)
-      //console.log('Keepit deleted')
-    })
+  Keepit.deleteOne({ _id: id }, function (err) {
+    if (err) console.log(err)
+    //console.log('Keepit deleted')
+  })
 
-    return { message: 'Deletion complete ' }
-  } catch (e) {
-    return { message: 'Error: ' + e }
-  }
+  return { message: 'Deletion complete ' }
 }
 
 module.exports = {
