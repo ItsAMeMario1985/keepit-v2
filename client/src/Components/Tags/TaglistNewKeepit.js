@@ -39,7 +39,7 @@ export default function TaglistNewKeepit({
   if (tags.length === 1 && tags[0].value === 'No tags found') {
     return (
       <StyledNoTagsResponse>
-        No tags found for your image :(
+        No cloud tags found, sorry. Add your own!
       </StyledNoTagsResponse>
     )
   } else if (tags.length === 0 && showIsloading) {

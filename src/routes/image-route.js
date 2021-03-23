@@ -18,7 +18,6 @@ router.post('/gettags', auth, imageController.getTags)
  */
 
 router.post('/upload', auth, function (req, res) {
-  console.log('// Upload route')
   imageController.upload(req, res)
 })
 

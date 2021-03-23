@@ -2,12 +2,9 @@ import AWS from 'aws-sdk'
 import path from 'path'
 import fs from 'fs'
 
-const upload = async (filePath) => {
-  if (process.env.NODE_ENV === 'DEVELOPMENT') {
-    var folder = 'imgLokal/'
-  } else {
-    var folder = 'img/'
-  }
+const upload = async (filePath, userId) => {
+  // Define image folder in S3
+  let folder = process.env.amazons3foler
 
   try {
     AWS.config.update({
@@ -18,29 +15,27 @@ const upload = async (filePath) => {
     var params = {
       Bucket: 'keepitbucket',
       Body: fs.createReadStream(filePath),
-      Key: folder + path.basename(filePath),
+      Key: folder + '/' + userId + '_' + path.basename(filePath),
       ACL: 'public-read',
     }
-    s3.upload(params, function (err, data) {
-      if (err) {
-        console.log('Error', err)
+    s3.upload(params, function (error, data) {
+      if (error) {
+        console.log('Error', error)
       }
       if (data) {
-        console.log('// Image Service -> SendToS3 -> success ->', data.Location)
+        console.log('// AWS Service -> SendToS3 -> success ->', data.Location)
       }
     })
   } catch (e) {
-    return { message: 'Error in saving image' + e }
+    return { message: '‼️ Error in saving image' + e }
   }
 }
 
-const deleteImg = async (filePath) => {
-  if (process.env.NODE_ENV === 'DEVELOPMENT') {
-    var folder = 'imgLokal/'
-  } else {
-    var folder = 'img/'
-  }
-  console.log('S3 -> Try to delete ', filePath)
+const deleteImg = async (filePath, userId) => {
+  // Define image folder in S3
+  let folder = process.env.amazons3foler
+
+  console.log('// Called delete s3 service', filePath)
   try {
     AWS.config.update({
       accessKeyId: process.env.accessKeyId,
@@ -49,18 +44,18 @@ const deleteImg = async (filePath) => {
     var s3 = new AWS.S3()
     var params = {
       Bucket: 'keepitbucket',
-      Key: folder + path.basename(filePath),
+      Key: folder + '/' + userId + '_' + path.basename(filePath),
     }
-    s3.deleteObject(params, function (err, data) {
-      if (err) {
-        console.log('Error', err)
+    s3.deleteObject(params, function (error, data) {
+      if (error) {
+        console.log('Error', error)
       }
       if (data) {
-        console.log('// Image Service -> SendToS3 -> success ->', data)
+        console.log('// AWS Service -> DeleteFromS3 -> success')
       }
     })
   } catch (e) {
-    return { message: 'Error in saving image' + e }
+    return { message: '‼️ Error in saving image' + e }
   }
 }
 

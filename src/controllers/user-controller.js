@@ -2,26 +2,16 @@ import UserService from '../services/user-service'
 
 module.exports = { login, signup }
 
-async function login(req, res) {
-  console.log('// Login Controller ')
+function login(req, res) {
   const { email, password } = req.body
-  try {
-    let response = await UserService.login(email, password)
-    console.log(response)
-    res.json(response)
-  } catch (err) {
-    res.status(500).send(err)
-  }
+  UserService.login(email, password)
+    .then((response) => res.json(response))
+    .catch((error) => res.status(500).send(error + ''))
 }
 
-async function signup(req, res) {
-  console.log('// Signup Controller ')
+function signup(req, res) {
   const { email, password } = req.body
-  try {
-    let response = await UserService.signup(email, password)
-    console.log(response)
-    res.json(response)
-  } catch (err) {
-    res.status(500).send(err)
-  }
+  UserService.signup(email, password)
+    .then((response) => res.json(response))
+    .catch((error) => res.status(500).send(error + ''))
 }

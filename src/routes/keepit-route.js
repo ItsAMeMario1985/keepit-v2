@@ -18,7 +18,6 @@ router.get('/getAll', auth, keepitController.getAll)
  */
 
 router.post('/save', auth, function (req, res) {
-  console.log('save route')
   keepitController.save(req, res)
 })
 
