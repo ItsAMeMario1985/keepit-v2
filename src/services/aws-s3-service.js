@@ -3,7 +3,6 @@ import path from 'path'
 import fs from 'fs'
 
 const upload = async (filePath, userId) => {
-  // Define image folder in S3
   let folder = process.env.amazons3foler
 
   try {
@@ -51,7 +50,7 @@ const deleteImg = async (filePath, userId) => {
         console.log('Error', error)
       }
       if (data) {
-        console.log('// AWS Service -> DeleteFromS3 -> success')
+        console.log('// AWS Service -> DeleteFromS3 -> success', data)
       }
     })
   } catch (e) {

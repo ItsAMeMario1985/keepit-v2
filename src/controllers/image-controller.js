@@ -26,10 +26,10 @@ function upload(req, res) {
   })
   Promise.all(savingPromises)
     .then((imagePaths) => {
-      imagePaths.forEach((imagePath) => {
-        AwsS3Service.upload(imagePath, userId)
-        AwsS3Service.upload(imagePath.replace('.webp', '_thumb.webp'), userId)
-      })
+      // imagePaths.forEach((imagePath) => {
+      //   AwsS3Service.upload(imagePath, userId)
+      //   AwsS3Service.upload(imagePath.replace('.webp', '_thumb.webp'), userId)
+      // })
       res.json({ ids: responseIds })
     })
     .catch((error) => res.status(500).send(error + ''))
