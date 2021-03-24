@@ -73,3 +73,25 @@ export function requestApi(props) {
   }
   return fetch(props.url, requestOptions).then((response) => response.json())
 }
+
+export function apiUserLogin(credentials) {
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
+  return fetch(apiBaseUrl + '/user/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json())
+}
+
+export function apiRegister(credentials) {
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
+  return fetch(apiBaseUrl + '/user/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json())
+}

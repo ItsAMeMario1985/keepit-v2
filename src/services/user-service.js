@@ -3,47 +3,47 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
 const login = async (email, password) => {
-  try {
-    const user = await User.findOne({
-      email,
-    })
-    if (!user) {
-      return {
-        message: 'User not exist',
-      }
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password)
-    if (!isMatch) {
-      return {
-        message: 'Incorrect Password',
-      }
-    }
-
-    const payload = {
-      user: {
-        id: user.id,
-      },
-    }
-    return new Promise((resolve) => {
-      jwt.sign(
-        payload,
-        'randomString',
-        {
-          expiresIn: '180d',
-        },
-        (error, token) => {
-          if (error) return reject(error)
-          resolve({ token: token })
-        }
-      )
-    })
-  } catch (e) {
-    console.error(e)
+  // try {
+  const user = await User.findOne({
+    email,
+  })
+  if (!user) {
     return {
-      message: 'Login Error' + e,
+      message: 'Error: User not exist.',
     }
   }
+
+  const isMatch = await bcrypt.compare(password, user.password)
+  if (!isMatch) {
+    return {
+      message: 'Error: Incorrect Password',
+    }
+  }
+
+  const payload = {
+    user: {
+      id: user.id,
+    },
+  }
+  return new Promise((resolve) => {
+    jwt.sign(
+      payload,
+      'randomString',
+      {
+        expiresIn: '180d',
+      },
+      (error, token) => {
+        if (error) return reject(error)
+        resolve({ token: token })
+      }
+    )
+  })
+  // } catch (e) {
+  //   console.error(e)
+  //   return {
+  //     message: 'Login Error' + e,
+  //   }
+  // }
 }
 
 const signup = async (email, password) => {
@@ -52,9 +52,9 @@ const signup = async (email, password) => {
       email,
     })
     if (user) {
-      return res.status(400).json({
-        message: 'User Already Exists',
-      })
+      return {
+        message: 'Error: User already exist.',
+      }
     }
 
     user = new User({

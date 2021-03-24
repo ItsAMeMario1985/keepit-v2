@@ -2,8 +2,8 @@ import styled from 'styled-components/macro'
 import PropTypes from 'prop-types'
 
 Button.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  buttonText: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  buttonText: PropTypes.string,
 }
 
 export default function Button({ onClick, children }) {
@@ -22,7 +22,6 @@ const StyledButton = styled.button`
   min-height: 40px;
   min-width: 100px;
   width: 100%;
-
   font-weight: 400;
   color: white;
   padding: 8px 20px 8px 20px;
@@ -32,5 +31,10 @@ const StyledButton = styled.button`
 
   svg {
     margin-left: 10px;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease-out;
   }
 `

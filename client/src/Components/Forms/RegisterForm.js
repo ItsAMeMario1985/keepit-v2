@@ -2,11 +2,12 @@ import { useState } from 'react'
 import styled from 'styled-components/macro'
 import { ReactComponent as Logo } from '../../Assets/logo.svg'
 import Button from '../Buttons/Button'
-import { apiUserLogin } from '../../Services/apiRequests'
+import { apiRegister } from '../../Services/apiRequests'
 
 export default function RegisterForm({ setToken, setLoginOrRegister }) {
   const [emailInvalidMsg, setEmailInvalidMsg] = useState()
   const [passwordInvalidMsg, setPasswordInvalidMsg] = useState()
+  const [secPasswordInvalidMsg, setSecPasswordInvalidMsg] = useState()
   const [responseMsg, setResponseMsg] = useState()
 
   const [email, setEmail] = useState()
@@ -14,29 +15,31 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const response = await apiUserLogin({
-      email,
-      password,
-    })
-    if (response.message && response.message.includes('Error')) {
-      let message = response.message
-      if (message === 'Error: User not exist.')
-        setResponseMsg('Sorry, user not exists.')
-      if (message === 'Error: Incorrect Password')
-        setResponseMsg('Sorry, your password seems to be wrong.')
+    if (!emailInvalidMsg && !passwordInvalidMsg && !secPasswordInvalidMsg) {
+      const response = await apiRegister({
+        email,
+        password,
+      })
+      if (response.message && response.message.includes('Error')) {
+        let message = response.message
+        if (message === 'Error: User already exist.')
+          setResponseMsg('Sorry, user already exist.')
+      } else {
+        setToken(response)
+      }
     } else {
-      setToken(response)
+      setResponseMsg('There is something wrong.')
     }
   }
 
   const handleChangeView = () => {
-    setLoginOrRegister('register')
+    setLoginOrRegister('login')
   }
 
-  const validateInput = (e) => {
+  const handleInputChange = (e) => {
     const fieldName = e.target.name
     const fieldValue = e.target.value
-    let somethingWrong
+    let somethingWrong = false
 
     if (fieldName === 'email') {
       setEmail(fieldValue)
@@ -54,7 +57,23 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
       if (fieldValue.length < 6) {
         somethingWrong = 'Password is to short (min 6 letter).'
       }
+      if (!fieldValue.match('[A-Z]')) {
+        somethingWrong = 'Password invalid. Uppercase letter is missing.'
+      }
+      if (!fieldValue.match('[a-z]')) {
+        somethingWrong = 'Password invalid. Lowercase letter is missing.'
+      }
+      if (!fieldValue.match('[0-9]')) {
+        somethingWrong = 'Password invalid. One number is missing.'
+      }
+
       setPasswordInvalidMsg(somethingWrong)
+    }
+    if (fieldName === 'password2') {
+      if (fieldValue !== password) {
+        somethingWrong = 'Passwords not matching.'
+      }
+      setSecPasswordInvalidMsg(somethingWrong)
     }
   }
 
@@ -66,7 +85,7 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
           type="email"
           name="email"
           placeholder="Email"
-          onBlur={validateInput}
+          onBlur={handleInputChange}
           required
         ></StyledInput>
         <StyledInvalidMsg>{emailInvalidMsg}</StyledInvalidMsg>
@@ -74,16 +93,27 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
           type="password"
           name="password"
           placeholder="Password"
-          onBlur={validateInput}
+          onBlur={handleInputChange}
           required
         ></StyledInput>
         <StyledInvalidMsg>{passwordInvalidMsg}</StyledInvalidMsg>
-        <StyledSumbitButton type="submit">Login</StyledSumbitButton>
+        <StyledInput
+          type="password"
+          name="password2"
+          placeholder="Repeat password"
+          onBlur={handleInputChange}
+          required
+        ></StyledInput>
+        <StyledInvalidMsg>{secPasswordInvalidMsg}</StyledInvalidMsg>
+        <Button disabled type="submit">
+          Sign Up
+        </Button>
         <StyledInvalidMsgResponse>{responseMsg}</StyledInvalidMsgResponse>
+
         <StyledSubText>
-          No account yet?{' '}
+          Already have an account?{' '}
           <StyledFooterLink onClick={handleChangeView}>
-            Register here!
+            Login here!
           </StyledFooterLink>
         </StyledSubText>
       </StyledForm>
@@ -91,14 +121,19 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
   )
 }
 
+const StyledInvalidMsgResponse = styled.div`
+  font-size: 10px;
+  color: red;
+  width: 100%;
+  text-align: center;
+  height: 10px;
+  margin-top: 5px;
+`
+
 const StyledFooterLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
   color: var(--color-primary);
-`
-const StyledSumbitButton = styled(Button)`
-  margin: 0 0 15px 0;
-  background-color: green;
 `
 
 const StyledSubText = styled.span`
@@ -111,15 +146,6 @@ const StyledInvalidMsg = styled.div`
   width: 100%;
   text-align: center;
   height: 10px;
-`
-
-const StyledInvalidMsgResponse = styled.div`
-  font-size: 10px;
-  color: red;
-  width: 100%;
-  text-align: center;
-  height: 10px;
-  margin-top: 5px;
 `
 
 const StyledLogo = styled(Logo)`
@@ -156,11 +182,11 @@ const StyledForm = styled.form`
   align-items: center;
 
   button {
-    margin-top: 15px;
+    margin-top: 20px;
     cursor: pointer;
   }
 
   span {
-    margin-top: 15px;
+    margin-top: 25px;
   }
 `
