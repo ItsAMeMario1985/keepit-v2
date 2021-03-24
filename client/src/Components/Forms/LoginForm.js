@@ -29,6 +29,13 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
     }
   }
 
+  const handleInputChange = (e) => {
+    const fieldName = e.target.name
+    const fieldValue = e.target.value
+    if (fieldName === 'email') setEmail(fieldValue)
+    if (fieldName === 'password') setPassword(fieldValue)
+  }
+
   const handleChangeView = () => {
     setLoginOrRegister('register')
   }
@@ -36,10 +43,8 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
   const validateInput = (e) => {
     const fieldName = e.target.name
     const fieldValue = e.target.value
-    let somethingWrong
-
+    let somethingWrong = false
     if (fieldName === 'email') {
-      setEmail(fieldValue)
       if (!fieldValue.includes('@') || !fieldValue.includes('.')) {
         somethingWrong = 'Email invalid.'
       }
@@ -48,11 +53,9 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
       }
       setEmailInvalidMsg(somethingWrong)
     }
-
     if (fieldName === 'password') {
-      setPassword(fieldValue)
-      if (fieldValue.length < 6) {
-        somethingWrong = 'Password is to short (min 6 letter).'
+      if (fieldValue.length === 0) {
+        somethingWrong = 'Password is missing.'
       }
       setPasswordInvalidMsg(somethingWrong)
     }
@@ -67,6 +70,7 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
           name="email"
           placeholder="Email"
           onBlur={validateInput}
+          onChange={handleInputChange}
           required
         ></StyledInput>
         <StyledInvalidMsg>{emailInvalidMsg}</StyledInvalidMsg>
@@ -75,6 +79,7 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
           name="password"
           placeholder="Password"
           onBlur={validateInput}
+          onChange={handleInputChange}
           required
         ></StyledInput>
         <StyledInvalidMsg>{passwordInvalidMsg}</StyledInvalidMsg>
