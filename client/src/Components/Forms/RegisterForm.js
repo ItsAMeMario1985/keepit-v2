@@ -32,11 +32,18 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
     }
   }
 
+  const handleInputChange = (e) => {
+    const fieldName = e.target.name
+    const fieldValue = e.target.value
+    if (fieldName === 'email') setEmail(fieldValue)
+    if (fieldName === 'password') setPassword(fieldValue)
+  }
+
   const handleChangeView = () => {
     setLoginOrRegister('login')
   }
 
-  const handleInputChange = (e) => {
+  const validateInput = (e) => {
     const fieldName = e.target.name
     const fieldValue = e.target.value
     let somethingWrong = false
@@ -85,7 +92,8 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
           type="email"
           name="email"
           placeholder="Email"
-          onBlur={handleInputChange}
+          onBlur={validateInput}
+          onChange={handleInputChange}
           required
         ></StyledInput>
         <StyledInvalidMsg>{emailInvalidMsg}</StyledInvalidMsg>
@@ -93,7 +101,8 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
           type="password"
           name="password"
           placeholder="Password"
-          onBlur={handleInputChange}
+          onBlur={validateInput}
+          onChange={handleInputChange}
           required
         ></StyledInput>
         <StyledInvalidMsg>{passwordInvalidMsg}</StyledInvalidMsg>
@@ -101,7 +110,7 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
           type="password"
           name="password2"
           placeholder="Repeat password"
-          onBlur={handleInputChange}
+          onBlur={validateInput}
           required
         ></StyledInput>
         <StyledInvalidMsg>{secPasswordInvalidMsg}</StyledInvalidMsg>
