@@ -1,0 +1,3 @@
+```jsx
+<RegisterForm></RegisterForm>
+```

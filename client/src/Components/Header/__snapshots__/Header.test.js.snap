@@ -6,6 +6,7 @@ exports[`Header renders correctly 1`] = `
 >
   <svg
     data-testid="TestHeaderLogo"
+    width="157"
   >
     logo.svg
   </svg>

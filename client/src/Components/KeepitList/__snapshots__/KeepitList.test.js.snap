@@ -9,7 +9,7 @@ exports[`KeepitList renders correctly 1`] = `
       alt=""
       class="KeepitList__StyledImg-sc-1db6amq-1 bA-Drmk"
       data-testid="TestKeepitImg"
-      src="undefined/test-thumb.png"
+      src="https://www.test.de/images/svgicons/test.de-logo;v37467901.svg"
     />
     <div
       class="KeepitList__StyledStarRating-sc-1db6amq-0 iDCVPP"

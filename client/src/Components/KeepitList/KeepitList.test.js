@@ -5,26 +5,35 @@ import user from '@testing-library/user-event'
 
 const keepits = [
   {
-    rated: 4,
+    userId: '6050d5b92e3b4f4c49066550',
     city: 'Hamburg',
     country: 'Germany',
-    date: {
-      date: '2020-12-29 00:00:00.000000',
-      timezone_type: 3,
-      timezone: 'UTC',
-    },
-    id: 187,
-    images: [testImage],
+    latitude: '53.592064',
+    longitude: '10.000793600000002',
+    rating: 4,
+    createdAt: '2021-03-24T11:32:57.852Z',
+    submitted: false,
     tags: [
       {
+        createdAt: '2021-03-24T11:32:57.855Z',
+        _id: '605b237a445871010c4067e4',
         value: 'Beer',
-        isCustom: false,
-      },
-      {
-        value: 'Alcohol',
-        isCustom: false,
+        isCustom: 'false',
+        keepitId: '605b237a445871010c4067e3',
+        __v: 0,
       },
     ],
+    images: [
+      {
+        _id: '605b237a445871010c4067e6',
+        path: 'https://www.test.de/images/svgicons/test.de-logo;v37467901.svg',
+        id: 'cc018eb9-b380-421f-91e3-a1e8ace4983a',
+        keepitId: '605b237a445871010c4067e3',
+        __v: 0,
+      },
+    ],
+    _id: '605b237a445871010c4067e3',
+    __v: 0,
   },
 ]
 
@@ -47,7 +56,10 @@ describe('KeepitList', () => {
     const { getByTestId } = render(<KeepitList keepits={keepits} />)
     const ImgContainer = getByTestId('TestKeepitImg')
     expect(ImgContainer).toHaveStyle(`max-height: 100%;`)
-    expect(ImgContainer).toHaveAttribute('src', 'undefined/test-thumb.png')
+    expect(ImgContainer).toHaveAttribute(
+      'src',
+      'https://www.test.de/images/svgicons/test.de-logo;v37467901.svg'
+    )
   })
 
   it('onclick works', () => {
