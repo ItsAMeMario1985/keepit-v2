@@ -13,7 +13,6 @@ KeepitList.propTypes = {
 
 export default function KeepitList({ keepits, className }) {
   const history = useHistory()
-  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL
 
   if (keepits.length === 0) {
     return <LoadingSpinner />

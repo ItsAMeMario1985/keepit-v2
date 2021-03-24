@@ -1,20 +1,37 @@
+import { useState } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import NewKeepitPage from './Pages/NewKeepitPage'
 import HomePage from './Pages/HomePage'
 import LoginForm from './Components/Forms/LoginForm'
+import RegisterForm from './Components/Forms/RegisterForm'
 import KeepitDetailPage from './Pages/KeepitDetailPage'
 import styled from 'styled-components/macro'
 import useToken from './Hooks/useToken'
 
 function App() {
   const { token, setToken } = useToken()
+  const [loginOrRegister, setLoginOrRegister] = useState('login')
 
   if (!token) {
-    return (
-      <StyledAppWrapper>
-        <LoginForm setToken={setToken} />
-      </StyledAppWrapper>
-    )
+    if (loginOrRegister === 'login') {
+      return (
+        <StyledAppWrapper>
+          <LoginForm
+            setToken={setToken}
+            setLoginOrRegister={setLoginOrRegister}
+          />
+        </StyledAppWrapper>
+      )
+    } else {
+      return (
+        <StyledAppWrapper>
+          <RegisterForm
+            setToken={setToken}
+            setLoginOrRegister={setLoginOrRegister}
+          />
+        </StyledAppWrapper>
+      )
+    }
   }
 
   return (
