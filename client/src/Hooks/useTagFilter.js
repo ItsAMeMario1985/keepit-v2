@@ -16,15 +16,16 @@ export default function useTagFilter() {
 
   function generateTagFilter(keepits) {
     let collectedTags = []
-    keepits.map((keepit) => {
-      let tags = keepit.tags
-      tags.map((tag) => {
-        collectedTags = [
-          ...collectedTags,
-          { value: tag.value, isCustom: tag.isCustom },
-        ]
+    keepits &&
+      keepits.map((keepit) => {
+        let tags = keepit.tags
+        tags.map((tag) => {
+          collectedTags = [
+            ...collectedTags,
+            { value: tag.value, isCustom: tag.isCustom },
+          ]
+        })
       })
-    })
     collectedTags.sort(compare)
     setFilterTags(unique(collectedTags, 'value'))
   }

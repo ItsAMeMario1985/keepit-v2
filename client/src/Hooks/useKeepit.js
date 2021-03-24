@@ -49,15 +49,19 @@ export default function useKeepit() {
   }
 
   function handleApiKeepits(result) {
-    setKeepits(
-      result.sort(function (a, b) {
-        return b.id - a.id
-      })
-    )
-    setRawKeepits(
-      result.sort(function (a, b) {
-        return b.id - a.id
-      })
-    )
+    if (result.message === 'No keepit yet.') {
+      setKeepits(false)
+    } else {
+      setKeepits(
+        result.sort(function (a, b) {
+          return b.id - a.id
+        })
+      )
+      setRawKeepits(
+        result.sort(function (a, b) {
+          return b.id - a.id
+        })
+      )
+    }
   }
 }

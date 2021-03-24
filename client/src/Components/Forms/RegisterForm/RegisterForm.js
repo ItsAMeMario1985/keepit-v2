@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components/macro'
-import { ReactComponent as Logo } from '../../Assets/logo.svg'
+import { ReactComponent as Logo } from '../../../Assets/logo.svg'
 import Button from '../../Buttons/Button'
 import { apiRegister } from '../../../Services/apiRequests'
 
