@@ -13,7 +13,7 @@ import useKeepit from '../Hooks/useKeepit'
 import useTagFilter from '../Hooks/useTagFilter'
 import useSearchFilter from '../Hooks/useSearchFilter'
 
-export default function HomePage() {
+export default function HomePage({ deleteToken }) {
   const { rawKeepits, keepits, setKeepits, loadKeepitsFromApi } = useKeepit()
   const { search, setSearch, searchKeepits } = useSearchFilter()
   const [showFilter, setShowFilter] = useState([])
@@ -83,6 +83,9 @@ export default function HomePage() {
 
   function logout() {
     console.log('logout...')
+    if (window.confirm('Logout?')) {
+      deleteToken()
+    }
   }
 
   function handleSearch(event) {
@@ -146,40 +149,3 @@ const StyledInput = styled.input`
   margin: 0px 0 15px 0;
   font-size: 16px;
 `
-
-/*
-
-<StyledLayout>
-        <StyledKeepitArea>
-          <Header />
-          <KeepitList keepits={keepits} />
-        </StyledKeepitArea>
-        <StyledContentSeparator
-          onClick={() => setShowFilter(!showFilter)}
-          text="FILTER"
-          icon={<FilterIcon fill="#c7c7c7" width="10" height="11" />}
-        />
-        <StyledFilterArea filterHeight={filterHeight}>
-          <StyledInput
-            onChange={handleSearch}
-            placeholder="Search..."
-          ></StyledInput>
-          <Taglist
-            tags={filterTags}
-            onClick={handleFilter}
-            bgColor="var(--color-primary)"
-            showIsCustom={false}
-            showIsloading={false}
-          ></Taglist>
-          <ResetFilterButton onClick={resetFilter} buttonText="Reset" />
-        </StyledFilterArea>
-        <Footer
-          actionButtonText="New Keepit"
-          actionButtonIcon={<UploadButton />}
-          leftOnClick={logout}
-          leftIcon={<LogoutIcon />}
-          rightIcon={<SearchIcon />}
-          rightOnClick={() => setShowFilter(!showFilter)}
-        ></Footer>{' '}
-      </StyledLayout>
-*/

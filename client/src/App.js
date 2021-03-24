@@ -9,7 +9,7 @@ import styled from 'styled-components/macro'
 import useToken from './Hooks/useToken'
 
 function App() {
-  const { token, setToken } = useToken()
+  const { token, setToken, deleteToken } = useToken()
   const [loginOrRegister, setLoginOrRegister] = useState('login')
 
   if (!token) {
@@ -41,7 +41,7 @@ function App() {
           <NewKeepitPage />
         </Route>
         <Route exact path="/">
-          <HomePage />
+          <HomePage deleteToken={deleteToken} />
         </Route>
         <Route exact path="/detail/:id">
           <KeepitDetailPage />

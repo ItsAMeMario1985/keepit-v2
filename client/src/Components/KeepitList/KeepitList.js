@@ -7,7 +7,6 @@ import ImageNotFoundImg from '../../Assets/image-not-found.png'
 import { v4 as uuidv4 } from 'uuid'
 
 KeepitList.propTypes = {
-  keepits: PropTypes.array.isRequired,
   className: PropTypes.string,
 }
 
