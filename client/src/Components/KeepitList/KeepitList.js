@@ -14,6 +14,10 @@ KeepitList.propTypes = {
 export default function KeepitList({ keepits, className }) {
   const history = useHistory()
 
+  if (!keepits) {
+    return <StyledNoKeepitsYet>↓ Add your first keepit ↓</StyledNoKeepitsYet>
+  }
+
   if (keepits.length === 0) {
     return <LoadingSpinner />
   }
@@ -52,6 +56,13 @@ export default function KeepitList({ keepits, className }) {
     </StyledUl>
   )
 }
+
+const StyledNoKeepitsYet = styled.div`
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+`
 
 const StyledStarRating = styled.div`
   display: flex;

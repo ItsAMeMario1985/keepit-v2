@@ -14,6 +14,9 @@ const getAll = (userId) => {
         keepitArr.forEach((kt) => {
           response.push(kt)
         })
+        if (keepitArr.length === 0) {
+          resolve({ message: 'No keepit yet.' })
+        }
         resolve(response)
       })
   })
