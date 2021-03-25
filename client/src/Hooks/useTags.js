@@ -15,7 +15,7 @@ export default function useTags() {
   }, [apiTags])
 
   useEffect(() => {
-    setTags([...tags, ...customTags])
+    setTags([...customTags, ...tags])
   }, [customTags])
 
   const addedTags = tags.filter((tag) => tag.added === true).sort()
@@ -42,7 +42,12 @@ export default function useTags() {
 
   function handleApiTags(response) {
     if (response.labels.length) {
-      const uniqueApiTags = [...new Set(response.labels)]
+      const unique = (value, index, self) => {
+        return self.indexOf(value) === index
+      }
+      const uniqueApiTags = response.labels.filter(unique)
+
+      //const uniqueApiTags = [...new Set(response.labels)]
       const expandedTags = uniqueApiTags.map((value, index) => {
         return { value: value, added: false, isCustom: false }
       })
