@@ -93,7 +93,7 @@ export default function KeepitDetailPage({ props }) {
             </StyledDateLocationArea>
             <StyledSubMenu>
               <StyedIconWrapperLeft onClick={handleDelete}>
-                <StyledDeleteIcon width="14" fill="#666" />
+                <StyledDeleteIcon width="14" fill="var(--color-text)" />
                 Delete
               </StyedIconWrapperLeft>
               <StyedIconWrapperRight
@@ -101,17 +101,17 @@ export default function KeepitDetailPage({ props }) {
                   alert('iscomingsoon')
                 }}
               >
-                <StyledEditIcon />
+                <StyledEditIcon width="17" fill="var(--color-text)" />
                 Edit
               </StyedIconWrapperRight>
             </StyledSubMenu>
           </StyledSubInfoArea>
         </StyledImageArea>
         <StyledTagArea>
-          <TagIcon />
+          <StyledTagIcon />
           <StyledTagHeadline>Tags</StyledTagHeadline>
           <StyledStarRating rating={keepit.rating} />
-          <ContentSeparator></ContentSeparator>
+          <StyledContentSeparator />
           <Taglist
             tags={tags}
             bgColor="var(--color-primary)"
@@ -126,11 +126,20 @@ export default function KeepitDetailPage({ props }) {
         leftIcon={<BackIcon />}
         leftOnClick={() => history.push('/')}
         rightIcon={<SearchIcon />}
-        rightOnClick={() => {}}
+        rightOnClick={() => history.push('/')}
       ></Footer>
     </>
   )
 }
+
+const StyledContentSeparator = styled(ContentSeparator)`
+  padding: 15px 0 15px 0;
+`
+
+const StyledTagIcon = styled(TagIcon)`
+  margin-bottom: -2px;
+`
+
 const StyledEditIcon = styled(EditIcon)`
   margin-bottom: 3px;
 `
@@ -140,7 +149,6 @@ const StyledDeleteIcon = styled(DeleteIcon)`
 `
 const StyledStarRating = styled(StarRating)`
   float: right;
-  padding-right: 5px;
   margin-top: 4px;
 `
 
@@ -151,6 +159,7 @@ const StyledDeleteOverlay = styled.div`
   align-items: center;
   gap: 10px;
 `
+
 const StyledOverlayImage = styled.img`
   width: 100%;
 `
@@ -162,6 +171,8 @@ const StyledDateLocationArea = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 30px;
+  font-size: 13px;
+  line-height: 15px;
 `
 
 const StyedIconWrapperLeft = styled.div`
@@ -170,7 +181,6 @@ const StyedIconWrapperLeft = styled.div`
   border-right: 1px solid #c9c9c9;
   justify-content: center;
   align-items: center;
-  gap: 5px;
   width: 70px;
   margin: 5px 0;
   cursor: pointer;
@@ -181,9 +191,9 @@ const StyedIconWrapperRight = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
   width: 70px;
   cursor: pointer;
+  margin-right: 15px;
 `
 
 const StyledSubMenu = styled.div`
@@ -228,6 +238,7 @@ const StyledLayout = styled.div`
   max-width: 500px;
   overflow: scroll;
 `
+
 const StyledImageArea = styled.div`
   text-align: center;
   position: relative;

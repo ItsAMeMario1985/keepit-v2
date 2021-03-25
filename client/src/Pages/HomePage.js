@@ -58,7 +58,7 @@ export default function HomePage({ deleteToken }) {
         <StyledFilterArea filterHeight={filterHeight}>
           <StyledInput
             onChange={handleSearch}
-            placeholder="Search..."
+            placeholder="Search"
           ></StyledInput>
           <Taglist
             tags={filterTags}

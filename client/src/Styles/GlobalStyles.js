@@ -79,7 +79,7 @@ textarea:focus, input:focus, button:focus{
 body {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
-    font-size: 100%;
+    font-size: 16px;
     color: var(--color-text);
     background-color: #414141;
 }
