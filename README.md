@@ -17,13 +17,13 @@
 - [x] Implement Login/Token (jwt)
 - [x] Refactor BE structure
 - [x] Implement Register (FE)
+- [x] Message for no keepit
+- [x] Implement tests (BE)
+- [x] Show custom tag input while loading
+- [x] Handle errors (BE/FE)
 - [ ] Improving tag results (BE)
 - [ ] Add edit function (BE/FE)
-- [x] Implement tests (BE)
-- [x] Handle errors (BE/FE)
 - [ ] Implement Barcode-Scanner (BE/FE)
 - [ ] Configs folder
-- [x] Message for no keepit
-- [ ] Show custom tag input while loading
 - [ ] Rework "Not-Tagged" flow
 - [ ] Rework delete-fn S3
