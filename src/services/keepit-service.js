@@ -84,6 +84,12 @@ const save = async (reqBody, userId) => {
     keepit.longitude = longitude
   }
 
+  // Date
+  let date_ob = new Date()
+
+  console.log('//// DATE NOW: ', date_ob)
+  keepit.createdAt = date_ob
+
   user.keepits.push(keepit)
   keepit.save()
   user.save()

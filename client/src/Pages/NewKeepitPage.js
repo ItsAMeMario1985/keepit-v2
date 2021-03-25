@@ -108,6 +108,7 @@ export default function NewKeepitPage() {
             text="TAG IT"
             icon={<TagIcon fill="#c7c7c7" width="11" height="11" />}
           />
+          <CustomTagForm onSubmit={handleSubmitTag} />
           <TaglistNewKeepit
             tags={tags}
             onClick={toggleTagAdded}
@@ -115,7 +116,6 @@ export default function NewKeepitPage() {
             showIsCustom={true}
             showIsloading={true}
           ></TaglistNewKeepit>
-          <CustomTagForm onSubmit={handleSubmitTag} />
         </StyledOptionArea>
       </StyledLayout>
       <Footer

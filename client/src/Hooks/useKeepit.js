@@ -49,30 +49,17 @@ export default function useKeepit() {
   }
 
   function handleApiKeepits(result) {
-    console.log(result)
     if (result.message === 'No keepit yet.') {
       setKeepits(false)
     } else {
-      setKeepits(
-        result.sort(compare)
-        // result.sort(function (a, b) {
-        //   return b - a
-        // })
-      )
-      setRawKeepits(
-        result.sort(compare)
-        // result.sort(function (a, b) {
-        //   return b - a
-        // })
-      )
+      setKeepits(result.sort(compareByCreatedAt))
+      setRawKeepits(result.sort(compareByCreatedAt))
     }
   }
 
-  function compare(a, b) {
-    // Use toUpperCase() to ignore character casing
+  function compareByCreatedAt(a, b) {
     const dateA = a.createdAt.toUpperCase()
     const dateB = b.createdAt.toUpperCase()
-
     let comparison = 0
     if (dateA > dateB) {
       comparison = 1

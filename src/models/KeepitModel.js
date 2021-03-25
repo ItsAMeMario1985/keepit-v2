@@ -27,7 +27,7 @@ const KeepitSchema = mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: 0,
   },
   submitted: {
     type: Boolean,

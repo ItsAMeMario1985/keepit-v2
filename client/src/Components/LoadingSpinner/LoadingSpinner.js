@@ -17,7 +17,6 @@ const StyledLoadingWrapper = styled.div`
   display: grid;
   place-items: center;
   width: 100%;
-  height: 100%;
 `
 
 const StyledLoadingDiv = styled.div`

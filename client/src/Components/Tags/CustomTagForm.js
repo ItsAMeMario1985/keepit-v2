@@ -12,7 +12,7 @@ export default function CustomTagForm({ onSubmit }) {
       <input
         name="customTag"
         type="text"
-        placeholder="Add your own tag..."
+        placeholder="Add your own tag"
       ></input>
       <button>
         <PlusIcon></PlusIcon>
@@ -24,7 +24,7 @@ export default function CustomTagForm({ onSubmit }) {
 const StyledForm = styled.form`
   display: flex;
   flex-direction: row;
-  margin: 10px 0;
+  margin: 5px 0 20px 0;
   input {
     width: 100%;
     height: 40px;
@@ -41,5 +41,9 @@ const StyledForm = styled.form`
     margin-left: 5px;
     width: 40px;
     height: 40px;
+  }
+
+  svg {
+    margin-bottom: 1px;
   }
 `
