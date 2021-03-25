@@ -1,9 +1,7 @@
 # Keepit v2 (node-version)
 "Stop forgetting, start keeping!"
 
-<img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/1.png" width="300px">   <img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/2.png" width="300px"> <img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/3.png" width="300px">
 
- <img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/4.png" width="300px"> <img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/5.png" width="300px"> 
 
 
 ## Tech Stack
@@ -15,6 +13,11 @@
 - Google Reverse Geolocation API
 - Amazon S3 API
 
+
+<img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/1.png" width="300px">   <img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/2.png" width="300px"> 
+
+<img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/3.png" width="300px"> <img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/4.png" width="300px"> 
+<img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/5.png" width="300px">
 
 
 ## Roadmap
@@ -31,3 +34,6 @@
 - [ ] Configs folder
 - [ ] Rework "Not-Tagged" flow
 - [ ] Rework delete-fn S3
+
+
+ 
