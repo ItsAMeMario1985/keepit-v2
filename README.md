@@ -1,8 +1,8 @@
 # Keepit v2 (node-version)
 "Stop forgetting, start keeping!"
 
-
-
+## About
+This is my capstone-poject for the web development web-dev bootcamp @ neue fische. This app is some kind of a image based note app which allow you to save/remember products you love.
 
 ## Tech Stack
 - React
