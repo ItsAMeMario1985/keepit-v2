@@ -25,7 +25,7 @@ This is my capstone-poject for the web development web-dev bootcamp @ neue fisch
 - [x] Refactor BE structure
 - [x] Implement Register (FE)
 - [x] Message for no keepit
-- [x] Implement tests (BE)
+- [ ] Implement tests (BE)
 - [x] Show custom tag input while loading
 - [x] Handle errors (BE/FE)
 - [ ] Improving tag results (BE)
