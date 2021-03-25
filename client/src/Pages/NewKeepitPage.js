@@ -19,8 +19,6 @@ import {
   SearchIcon,
 } from '../Components/Icons'
 
-import setBase64 from '../Util/setBase64'
-
 import useTags from '../Hooks/useTags'
 import useToken from '../Hooks/useToken'
 import useOverlay from '../Hooks/useOverlay'
