@@ -165,8 +165,8 @@ export default function NewKeepitPage() {
           status={overlayStatus}
           onClick={() => setOverlayStatus(false)}
         >
-          SAVE
-          <DoneIcon width="40" fill="var(--color-primary)" />
+          <DoneIcon width="60" fill="var(--color-primary)" />
+          SAVED
         </StyledSaveOverlay>
       )
       setOverlayStatus(true)
@@ -205,7 +205,6 @@ const StyledLayout = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  font-size: 112.5%;
   max-width: 500px;
   overflow: scroll;
 `
@@ -222,10 +221,15 @@ const StyledDeleteIcon = styled(XIcon)`
   right: -5px;
 `
 const StyledSaveOverlay = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  font-size: 1.5rem;
+
+  svg {
+    margin-bottom: 30px;
+  }
 `
 const StyledPreviewArea = styled.div`
   display: flex;

@@ -67,7 +67,7 @@ export default function TaglistNewKeepit({
 }
 
 const StyledNoTagsResponse = styled.div`
-  font-size: 13px;
+  font-size: 0.85rem;
   color: #a6a6a6;
   display: grid;
   place-items: center;
@@ -76,7 +76,7 @@ const StyledNoTagsResponse = styled.div`
 
 const StyledTagText = styled.span`
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.85rem;
   letter-spacing: 0.5px;
   margin: 0 8px 0 5px;
 `
@@ -103,6 +103,6 @@ const StyledLi = styled.li`
   border-left: 2px solid #e3e3e3;
   cursor: pointer;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.85rem;
   margin: 0 5px 5px 0;
 `

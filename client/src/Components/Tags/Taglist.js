@@ -57,7 +57,8 @@ export default function Taglist({
 
 const StyledTagText = styled.span`
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.85rem;
+  color: white;
   letter-spacing: 0.5px;
   margin: 0 8px 0 5px;
 `
@@ -82,7 +83,7 @@ const StyledLi = styled.li`
   border-left: 2px solid #e3e3e3;
   cursor: ${(props) => (props.clickable ? 'pointer' : 'auto')};
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.85rem;
   margin-bottom: 5px;
   margin-right: 5px;
 `

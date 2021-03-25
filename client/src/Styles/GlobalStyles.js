@@ -9,6 +9,11 @@ export default createGlobalStyle`
     outline: 0;
     outline: none;
     -webkit-tap-highlight-color: transparent;
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+  
 }
 
 html, body, div, span, applet, object, iframe,
@@ -27,9 +32,8 @@ time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
+
 }
 
 
@@ -73,14 +77,13 @@ textarea:focus, input:focus, button:focus{
     --color-secondary: #535353;
     --color-tertiary: #999999;
     --color-bg: #F4F4F4;
-    --color-text: #8E8E8E;
+    --color-text-dark: #5b5b5b;
+    --color-text-medium: #888;
+    --color-text-lighter: #888;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    font-size: 100%;
-    color: var(--color-text);
+
     background-color: #414141;
 }
 
@@ -88,6 +91,7 @@ input[type='text'],
 input[type='number'],
 textarea {
   font-size: 16px;
+  color: var(--color-text-dark);
 }
 
 

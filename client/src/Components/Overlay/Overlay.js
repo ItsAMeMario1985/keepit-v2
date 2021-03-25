@@ -22,6 +22,7 @@ export default function Overlay({ className, status, children, onClick }) {
   )
 }
 const StyledOverlay = styled.div`
+  font-size: 3rem;
   width: 100%;
   height: 100%;
   color: white;
@@ -33,7 +34,5 @@ const StyledOverlay = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0 30px;
-  font-size: 35px;
-  gap: 10px;
   max-width: 500px;
 `

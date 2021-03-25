@@ -58,7 +58,7 @@ export default function HomePage({ deleteToken }) {
         <StyledFilterArea filterHeight={filterHeight}>
           <StyledInput
             onChange={handleSearch}
-            placeholder="Search..."
+            placeholder="Search"
           ></StyledInput>
           <Taglist
             tags={filterTags}
@@ -129,7 +129,6 @@ const StyledLayout = styled.div`
   height: 100%;
   top: 0;
   width: 100%;
-  font-size: 112.5%;
   overflow: hidden;
   position: fixed;
   max-width: 500px;
@@ -147,5 +146,5 @@ const StyledInput = styled.input`
   padding-left: 15px;
   width: 100%;
   margin: 0px 0 15px 0;
-  font-size: 16px;
+  font-size: 1rem;
 `

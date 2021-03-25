@@ -31,6 +31,6 @@ const StyledTag = styled.span`
   margin: 0 7px 7px 0px;
   color: white;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 0.85rem;
   letter-spacing: 0.5px;
 `

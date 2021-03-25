@@ -96,35 +96,33 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
   )
 }
 
-const StyledFooterLink = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  color: var(--color-primary);
-`
-const StyledSumbitButton = styled(Button)`
-  margin: 0 0 15px 0;
-  background-color: green;
-`
-
-const StyledSubText = styled.span`
-  font-size: 12px;
-`
-
-const StyledInvalidMsg = styled.div`
-  font-size: 9px;
-  color: red;
-  width: 100%;
-  text-align: center;
-  height: 10px;
-`
-
 const StyledInvalidMsgResponse = styled.div`
-  font-size: 10px;
+  font-size: 0.55rem;
   color: red;
   width: 100%;
   text-align: center;
   height: 10px;
   margin-top: 5px;
+`
+
+const StyledFooterLink = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+  color: var(--color-primary);
+  font-size: 0.8rem;
+`
+
+const StyledSubText = styled.span`
+  font-size: 0.8rem;
+  color: var(--color-text-dark);
+`
+
+const StyledInvalidMsg = styled.div`
+  font-size: 0.55rem;
+  color: red;
+  width: 100%;
+  text-align: center;
+  height: 10px;
 `
 
 const StyledLogo = styled(Logo)`
@@ -135,21 +133,18 @@ const StyledInput = styled.input`
   border: 0;
   border-bottom: 1px solid #e3e3e3;
   margin: 5px 0;
-  font-size: 16px;
   background-color: #f4f4f4;
   width: 250px;
-  color: var(--color-secondary);
+  color: var(--color-text-dark);
 `
 
 const StyledLayout = styled.div`
   display: grid;
   place-items: center;
   background-color: #f4f4f4;
-
   height: 100%;
   top: 0;
   width: 100%;
-  font-size: 112.5%;
   overflow: hidden;
   position: fixed;
   max-width: 500px;
@@ -161,11 +156,16 @@ const StyledForm = styled.form`
   align-items: center;
 
   button {
-    margin-top: 15px;
+    margin-top: 20px;
     cursor: pointer;
   }
 
   span {
-    margin-top: 15px;
+    margin-top: 25px;
   }
+`
+
+const StyledSumbitButton = styled(Button)`
+  margin: 0 0 15px 0;
+  background-color: green;
 `

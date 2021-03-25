@@ -4,7 +4,7 @@ import { StarIcon } from '../Icons'
 
 StarRating.propTypes = {
   className: PropTypes.string,
-  rating: PropTypes.number.isRequired,
+  rating: PropTypes.number,
 }
 
 export default function StarRating({ rating, className }) {
