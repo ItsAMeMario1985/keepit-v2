@@ -1,11 +1,9 @@
 # Keepit v2 (node-version)
 "Stop forgetting, start keeping!"
 
-| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |
+<img src="https://github.com/mariothomsen/keepit/blob/master/readmev2.gif?raw=true" width="300px"><img src="https://github.com/mariothomsen/keepit/blob/master/readmev2.gif?raw=true" width="300px">
+
+
 
 
 ## Tech Stack
