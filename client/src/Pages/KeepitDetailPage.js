@@ -43,8 +43,8 @@ export default function KeepitDetailPage({ props }) {
     deleteKeepit(keepit._id)
     setOverlayContent(
       <StyledDeleteOverlay>
-        DELETE
-        <DeleteIcon width="40" fill="var(--color-primary)" />
+        <DeleteIcon width="50" fill="var(--color-primary)" />
+        DELETED ✓
       </StyledDeleteOverlay>
     )
     setOverlayStatus(true)
@@ -93,7 +93,7 @@ export default function KeepitDetailPage({ props }) {
             </StyledDateLocationArea>
             <StyledSubMenu>
               <StyedIconWrapperLeft onClick={handleDelete}>
-                <StyledDeleteIcon width="14" fill="var(--color-text)" />
+                <StyledDeleteIcon width="14" fill="var(--color-text-medium)" />
                 Delete
               </StyedIconWrapperLeft>
               <StyedIconWrapperRight
@@ -101,7 +101,7 @@ export default function KeepitDetailPage({ props }) {
                   alert('iscomingsoon')
                 }}
               >
-                <StyledEditIcon width="17" fill="var(--color-text)" />
+                <StyledEditIcon width="17" fill="var(--color-text-medium)" />
                 Edit
               </StyedIconWrapperRight>
             </StyledSubMenu>
@@ -147,17 +147,22 @@ const StyledEditIcon = styled(EditIcon)`
 const StyledDeleteIcon = styled(DeleteIcon)`
   margin-bottom: 3px;
 `
+
 const StyledStarRating = styled(StarRating)`
   float: right;
   margin-top: 4px;
 `
 
 const StyledDeleteOverlay = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  gap: 10px;
+  font-size: 1.5rem;
+
+  svg {
+    margin-bottom: 30px;
+  }
 `
 
 const StyledOverlayImage = styled.img`
@@ -165,25 +170,28 @@ const StyledOverlayImage = styled.img`
 `
 
 const StyledDateLocationArea = styled.div`
-  text-align: left;
+  align-items: center;
+  color: var(--color-text-medium);
   display: flex;
   flex-direction: column;
+  font-size: 0.85rem;
   justify-content: center;
-  align-items: center;
-  margin-left: 30px;
-  font-size: 13px;
   line-height: 15px;
+  margin-left: 30px;
+  text-align: left;
 `
 
 const StyedIconWrapperLeft = styled.div`
+  align-items: center;
+  border-right: 1px solid #c9c9c9;
+  color: var(--color-text-medium);
+  cursor: pointer;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #c9c9c9;
+  font-size: 0.8rem;
   justify-content: center;
-  align-items: center;
-  width: 70px;
   margin: 5px 0;
-  cursor: pointer;
+  width: 70px;
 `
 
 const StyedIconWrapperRight = styled.div`
@@ -194,16 +202,16 @@ const StyedIconWrapperRight = styled.div`
   width: 70px;
   cursor: pointer;
   margin-right: 15px;
+  font-size: 0.8rem;
+  color: var(--color-text-medium);
 `
 
 const StyledSubMenu = styled.div`
   display: flex;
   flex-direction: row;
-  font-size: 12px;
 `
 
 const StyledSubInfoArea = styled.div`
-  font-size: 15px;
   bottom: 0;
   height: 50px;
   position: absolute;
@@ -221,7 +229,7 @@ const StyledTagArea = styled.div`
 
 const StyledTagHeadline = styled.span`
   font-weight: 600;
-  font-size: 13px;
+  font-size: 0.85rem;
   color: #c7c7c7;
   margin-left: 5px;
   text-transform: uppercase;
@@ -234,7 +242,6 @@ const StyledLayout = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  font-size: 112.5%;
   max-width: 500px;
   overflow: scroll;
 `

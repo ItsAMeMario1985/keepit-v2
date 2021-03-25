@@ -30,7 +30,7 @@ const StyledForm = styled.form`
     height: 40px;
     border: 1px solid #eaeaea;
     padding-left: 15px;
-    font-size: 14px;
+    font-size: 1rem;
   }
 
   button {

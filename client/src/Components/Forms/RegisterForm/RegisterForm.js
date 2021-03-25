@@ -131,7 +131,7 @@ export default function RegisterForm({ setToken, setLoginOrRegister }) {
 }
 
 const StyledInvalidMsgResponse = styled.div`
-  font-size: 10px;
+  font-size: 0.55rem;
   color: red;
   width: 100%;
   text-align: center;
@@ -143,14 +143,16 @@ const StyledFooterLink = styled.span`
   text-decoration: underline;
   cursor: pointer;
   color: var(--color-primary);
+  font-size: 0.8rem;
 `
 
 const StyledSubText = styled.span`
-  font-size: 12px;
+  font-size: 0.8rem;
+  color: var(--color-text-dark);
 `
 
 const StyledInvalidMsg = styled.div`
-  font-size: 9px;
+  font-size: 0.55rem;
   color: red;
   width: 100%;
   text-align: center;
@@ -165,21 +167,18 @@ const StyledInput = styled.input`
   border: 0;
   border-bottom: 1px solid #e3e3e3;
   margin: 5px 0;
-  font-size: 16px;
   background-color: #f4f4f4;
   width: 250px;
-  color: var(--color-secondary);
+  color: var(--color-text-dark);
 `
 
 const StyledLayout = styled.div`
   display: grid;
   place-items: center;
   background-color: #f4f4f4;
-
   height: 100%;
   top: 0;
   width: 100%;
-  font-size: 112.5%;
   overflow: hidden;
   position: fixed;
   max-width: 500px;

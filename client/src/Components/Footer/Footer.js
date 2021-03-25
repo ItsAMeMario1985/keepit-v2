@@ -108,7 +108,7 @@ const StyleBgRight = styled.div`
 `
 const StyledText = styled.div`
   margin-top: 17px;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: rgb(80, 80, 80);
 `
 

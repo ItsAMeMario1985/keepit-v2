@@ -49,7 +49,7 @@ const StyledDiv = styled.div`
 
   span {
     font-weight: 600;
-    font-size: 13px;
+    font-size: 0.85rem;
     color: #c7c7c7;
     padding: ${(props) => (props.innerContent ? '0 5px' : '0')};
   }
