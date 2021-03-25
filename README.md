@@ -1,7 +1,7 @@
 # Keepit v2 (node-version)
 "Stop forgetting, start keeping!"
 
-<img src="https://github.com/mariothomsen/keepit/blob/master/readmev2.gif?raw=true" width="300px"><img src="https://github.com/mariothomsen/keepit/blob/master/readmev2.gif?raw=true" width="300px">
+<img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/1.png" width="300px"> <img src="https://keepitbucket.s3.eu-central-1.amazonaws.com/github/1.png" width="300px">
 
 
 
